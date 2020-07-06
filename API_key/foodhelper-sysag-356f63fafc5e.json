@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "foodhelper-sysag",
+  "private_key_id": "356f63fafc5e3a74874a304ad951c3a18ff17e87",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD8/mn0xaBrGlSx\n89u1ibA6mB8g9t5aiTcxne9AVB1nka1l7miw0DauZeiLRmp64jYc6YwTUaI2zutq\ngCVGo+6fDMXcJJMaRS4sZ8C/SziMdfKAa2wRByBRcQtJ8G3j7lUd+zKo7lwcQrjb\nn+duK5yTXYhZ+iYo3lRotuaZ9alw/0PNrxm/3QD3Ulf+xnmnrqC7BZ1R7pQ61Ejl\nrcCrMQEvInFvG54Bpc8AiqRfBpj+a5C505smIqOACG7vFIoyVFxMosVV8LvwQYNw\n+m8SxJcX3z7TsqviVY55PG/hmrQ9j62VyZ2F33WBbiZGvwJm78wUANeNdXY37w4+\nA0VCoBXBAgMBAAECggEAYyGPQ/VyE7V4DVh3tSzz7CmyPNjurHwKr/rqBgNPmEb5\nMjEWPX4AhxpwYa5gR7E+sdqDZAh/LsmqbgszT/gpJpI7LzT3nPoRix3GZU5kpIkM\n0ewFprBrpe3NFhZLAN5g5MQKiC4J0psEUy5XYRBepFGofVUqwaXIXlWYiyg60ga0\nSkBnIBGMaNPMx4sx8FKCApCl1p1uQTmhCmbDG6oy7uVlxVp7jnkYObyjqpDFsXKt\ndbEGeNtCEGa8gHRfvDfn6E1XhfBJNNx1AbqHcIrduO2dLvJoNpYNGqkE8Cksmisr\nbRN8OZvlp66z6P2uRBP/2DTm2+l6jQFlR2GOWe4TXwKBgQD/fPqlUAgaJSyrIbxU\n2osMNtqIQuGOr/54UWwmyhKBX//HKTpvxG4HILd1aB22xPX/LrsxG8kOijhzyXDQ\n3TBOmTq6xS+c8GJTalaOER+u0C+IsVQEHxAY9LRNn63wYknehW7vEZnB8P1j8xpS\niTmb3mUO1/NyJ98NYpSS4GXCdwKBgQD9gCfWdnRP03dKbPpWiB5thYrdo2XB5A8t\n0HTOlh+8BCXA/WrHeovCC0qS23NZ4XLoX//Ve6LFN/+2ukOlOqWOGt9jLCdY4Ndw\nIAGKmBQ1hGjQxVuRfK2LPj0kBnVab3wVl6eqFPJzyp3A4RkeKnsJrAnNPJ/5JE4g\nqR7MME7/hwKBgQCSFIO7webgDCFeOAvW+J5IfZS2FIejbj2xzdxo0WGDV8CHv6sJ\n/OZsbOh42O8kcbm2DqI5kgmDpsRgb+1xfwb/6d0KrXRr54ZQ65xR3rie26pSHhJL\nyPcLTd9KAuMRbyGNef3T89xWZ9R6MaX7SzsFREPEGPW5b9K5dIQ+9s84QQKBgEpb\nB9RhJFaxyUC8XGV7QamQTR4bqmJH2afviAN8h0xnzwcfje165XmCRFp1Ig2QEltU\npT7iJ+k/NrNLSUIyxJK9ER8OuW/Za3fI+4rCdtMHxpLOAMDY2DKKi/aAKnXfU38l\n35kE0eTi3ojPvcVaYoKAwtM/YBD89CmiUZVE6jcLAoGAHw0Vo0q/AfW0hzTSN5GF\niNSfRUvWWsHvFHvn895sXTU7vS1egkgePQLz3j3kdU2tD6EkLsZJoV6uPEtiRb2y\nYRn9htVAxQbU7HDzDvwAi1QCWEJcM2PUXcyToU8QosRP56S9fFE/LnRkdminPVlc\nVcxrgbaFukb3s6wThGVcqVk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "foodhelper-serviceaccount@foodhelper-sysag.iam.gserviceaccount.com",
+  "client_id": "110171557380270725397",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foodhelper-serviceaccount%40foodhelper-sysag.iam.gserviceaccount.com"
+}
