@@ -16,6 +16,10 @@ def on_chat_message(msg):
         bot.download_file(msg['document']['file_id'], 'Cibo.png')
         bot.sendMessage(chat_id, food_detection())
 
+    if content_type == "photo":
+        bot.download_file(msg['photo'][0]['file_id'], 'Cibo.png')
+        bot.sendMessage(chat_id, food_detection())
+
     if content_type == "text":
 
         if msg["text"].lower() == "/info":
