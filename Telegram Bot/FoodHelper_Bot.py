@@ -11,6 +11,9 @@ bot = telepot.Bot(TOKEN)
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
 
+    if content_type == "document":
+        bot.download_file(msg['document']['file_id'], 'Cibo.png')
+
     if content_type == "text":
 
         if msg["text"].lower() == "/info":
@@ -41,10 +44,6 @@ def on_chat_message(msg):
 
         elif msg["text"].lower() == "/user":
             show_user(msg)
-
-    #if content_type == "photo":
-     #   bot.download_file(msg['photo'][-1]['file_id'], 'image.png')
-
 
 
 def new_user(msg):
