@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "newagent-qwujpw",
+  "private_key_id": "1825a9e19cd14fc6602cf25bc37e3332fc48d0aa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCT9Mn8TPJSeKIs\nFINgME2FRhpWwesMJeEWGeMYyodzLR5nmWrij1Kj7DjwVTeO1BoPgo9odOD99DDe\nh7IHkDTNKbSHUrmY45SstNzuw0lyPfKuZT827iJ+zRIERDRsAtXKSfS7hwlqFsLE\n2GWS2KmUo2LEuTJmoitSho/AN0um/gv1WLz5uTITD6DK3SwH/VhfAc6q1+0YF7dC\nGBzKeDr6LXNDvbdy9IMX8NwOjps38HQmC4YXbfXWM+ssdD3bZdaGWqePrA3z5hCE\nBvlDetRLg5nBqD8lVCxl9151Gm0mOU67LHYGKO7nQZM1OEUe8mEBRRj3sARTSC+Q\nP72BsG7XAgMBAAECggEADhMy5dwCD2Nndg8LgmqF7WBCYC95Z0HxPDOBPZoCsavA\noTVgjCX7RBnUPtS0gNNfmUsfzl2UC8Sfo4PAJWUMCNpnUJpHiqpXuehIvjP4uDP5\ncqqyDU0xHePvS1WbsQzB/sjzTaWmeR+qLqSxYPtYgonaewFtMINL4MFpSm1YNo3+\nSkP735P947UK/tt9L99x3h2sCE0SJZvBfQHuPyoJezl68BirxlODPHX/dOmLgzG0\nG/cF4JDqTRwN124mMPogNUuSLzSQTMxLGZVUT7nEPFoYh0xmZ+6xsUJM4WpMpmt7\nsST8F9s6mWbixxWI6jezyHqvmPul1wYmFg8L7ejxZQKBgQDNvFH7X2E4mPipFXH1\nfI1B8qic/TEZhoz0n2QCqIhEZMk9vYbelEoWu+nlppO7EFjdBQZ0UxREZD+M8NmA\nzykmd+tTYW3nEDDnK7BJ+IqxF+e4Oom2ouuuyadOH6pMBQjoNIClUk7dLFxY0tVR\nynoCFvU3Pokqh0fdAIINr2jeBQKBgQC4GquiZLOv/RRp2BidiI7fxHcpwSbb/9aO\ndKfv9UqfLDaP6zOMBc5uk/GdHvOR1wUcPplz6/FHQhpaMFqYStKjT1eYjsocZ2Od\n7LfsaTfKv+IPgDlMEsHGRXzgh2ciWj0vyQ+V8xgoFTYnT/UcMlfPBvQ1QbFcDvk8\nHNgxVQvUKwKBgDRoz92gW4zmcxnnq6MkuntdTJTJbxOYkhnS7NA8jJIXtqgyusPC\ntOj7r8bf22xg6rJLEGzbqSMPAp1t0Yqdu1bgX6NbA3tERaDuITeGyBX7B/2HdAOB\nl1ZsamFdca1x7uXwUgFLaWmwXkoGU29FjDUyEf+jv5+E3Mqw0XCZCbbdAoGADNRW\n95ca6n2xaXrUpE263x8ayr8aDSSz9/NrLI6kZ5k2KCtUyUIyU4Rdxvw8LwKT6Zb3\nLJvZkYSqv3Q1K/2y1gyWZxw0O2x9BalUW9YtPCTJBRmDZKi99iorfJ4S8tLlBqp1\nOpbZLRnlTzIEO7XKZrPuWrO8P1UPyz+bVTy++UcCgYEAnx4qkl8qHU3ih0c5z1Ls\n7jKstjAaUWl8R9YjUGc/ZkvO8ge1Wr/TyaKSDUy1jjjiMbgngp9KEcgzQ1mEejsI\nBxSYmvG+zSRWpLFlw1W2umDOIP9E3QG/sLhYi+oNLpNIH0m1DrRP3AOMPw/87tz1\nIgc/bSB7wHGXDD4R/3FaLds=\n-----END PRIVATE KEY-----\n",
+  "client_email": "foodhelper-visonapi-t@newagent-qwujpw.iam.gserviceaccount.com",
+  "client_id": "101081939882434246674",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foodhelper-visonapi-t%40newagent-qwujpw.iam.gserviceaccount.com"
+}
