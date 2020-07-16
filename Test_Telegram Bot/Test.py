@@ -1,6 +1,5 @@
 import io, os
 from google.cloud import vision
-from Pillow_Utility import draw_borders, Image
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"newagent-qwujpw-1825a9e19cd1.json"
 client = vision.ImageAnnotatorClient()
