@@ -42,6 +42,10 @@ def on_chat_message(msg):
         elif msg["text"].lower() == "/user":
             show_user(msg)
 
+    #if content_type == "photo":
+     #   bot.download_file(msg['photo'][-1]['file_id'], 'image.png')
+
+
 
 def new_user(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
