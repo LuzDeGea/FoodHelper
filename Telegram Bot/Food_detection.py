@@ -15,7 +15,8 @@ scarti = {"Food","Meal","Cuisine","Dish","Ingredient","Vegetable","Bowl","Person
           "Vegan Nutrition","American Food","Platter","À La Carte Food",
           "Cooking","Banana family","Al dente","Cruciferous vegetables",
           "Fruit","Breakfast","Dessert","Baked goods","Sweetness",
-          "Frozen Dessert","Mirror"}
+          "Frozen Dessert","Mirror","Natural foods","Whole food",
+          "Meat","Fried food","Plant"}
 tipo_no = {"Superfood","Junk Food","Fast Food"}
 
 def food_detection():
@@ -39,10 +40,11 @@ def ConteinsLabel(response, in_lable):
     return False
 
 def filtering(response):
-    if ConteinsLabel(response,"Food")==True:
+    if ConteinsLabel(response,"Food")==True or ConteinsLabel(response,"Plant")==True:
         for food in response.label_annotations:
             if not(food.description in scarti):
                 return food.description
+        return "Cibo non riconosciuto correttamente"
     else:
         return "Questo non mi sembra cibo"
 
