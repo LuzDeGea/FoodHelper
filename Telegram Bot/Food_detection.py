@@ -16,7 +16,7 @@ scarti = {"Food","Meal","Cuisine","Dish","Ingredient","Vegetable","Bowl","Person
           "Cooking","Banana family","Al dente","Cruciferous vegetables",
           "Fruit","Breakfast","Dessert","Baked goods","Sweetness",
           "Frozen Dessert","Mirror","Natural foods","Whole food",
-          "Meat","Fried food","Plant"}
+          "Meat","Fried food","Plant","Local food"}
 tipo_no = {"Superfood","Junk Food","Fast Food"}
 
 def food_detection():
