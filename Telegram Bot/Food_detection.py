@@ -4,7 +4,7 @@ from google.cloud import vision
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"API_key\\Vision_key.json"
 client = vision.ImageAnnotatorClient()
 
-file_name = "C:\\Users\\anton\\FoodHelper\\Telegram Bot\\Cibo.png"
+file_name = r"Immagini\\Cibo.png"
 
 def food_detection():
     with io.open(file_name, 'rb') as image_file:

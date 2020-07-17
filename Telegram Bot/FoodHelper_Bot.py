@@ -14,11 +14,11 @@ def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
 
     if content_type == "document":
-        bot.download_file(msg['document']['file_id'], 'Cibo.png')
+        bot.download_file(msg['document']['file_id'], 'Immagini\\Cibo.png')
         bot.sendMessage(chat_id, food_detection())
 
     if content_type == "photo":
-        bot.download_file(msg['photo'][0]['file_id'], 'Cibo.png')
+        bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
         bot.sendMessage(chat_id, food_detection())
 
     if content_type == "text":
@@ -45,8 +45,8 @@ def on_chat_message(msg):
             new_user(msg)
 
         elif msg["text"].lower() == "/start":
-            bot.sendMessage(chat_id, "Hi, I'm FoodHelper! You can send me a photo or write me a name of a dish and I"
-                                     " will reccomand you or not to eat it. Write /help for more information."
+            bot.sendMessage(chat_id, "Ciao, Sono il tuo FoodHelper! Puoi mandarmi le foto di quello "
+                                     "che mangi per sapere  will reccomand you or not to eat it. Write /help for more information."
                                      "\n\nIt looks like you're an unregistered user. "
                                      "Please first reply next questions.")
             new_user(msg)
