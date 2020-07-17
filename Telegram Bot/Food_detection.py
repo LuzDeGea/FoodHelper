@@ -1,7 +1,7 @@
 import io, os
 from google.cloud import vision
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"newagent-qwujpw-1825a9e19cd1.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"API_key\\Vision_key.json"
 client = vision.ImageAnnotatorClient()
 
 file_name = "C:\\Users\\anton\\FoodHelper\\Telegram Bot\\Cibo.png"
