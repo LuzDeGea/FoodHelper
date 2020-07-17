@@ -14,7 +14,8 @@ scarti = {"Food","Meal","Cuisine","Dish","Ingredient","Vegetable","Bowl","Person
           "Food Group","Italian Food","Comfort Food","Vegetarian Food",
           "Vegan Nutrition","American Food","Platter","À La Carte Food",
           "Cooking","Banana family","Al dente","Cruciferous vegetables",
-          "Fruit","Breakfast","Dessert","Baked goods"}
+          "Fruit","Breakfast","Dessert","Baked goods","Sweetness",
+          "Frozen Dessert","Mirror"}
 tipo_no = {"Superfood","Junk Food","Fast Food"}
 
 def food_detection():
