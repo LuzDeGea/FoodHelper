@@ -2,6 +2,7 @@ import telepot
 from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardButton, InlineKeyboardMarkup
 from Food_detection import food_detection
+from Dialogflow_Api import rispondimi
 import time
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
@@ -21,6 +22,8 @@ def on_chat_message(msg):
         bot.sendMessage(chat_id, food_detection())
 
     if content_type == "text":
+        if msg["text"][0] != '/':
+            bot.sendMessage(chat_id, rispondimi(msg["text"]))
 
         if msg["text"].lower() == "/info":
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
