@@ -7,7 +7,7 @@ import dialogflow
 from google.api_core.exceptions import InvalidArgument
 DIALOGFLOW_PROJECT_ID = 'newagent-qwujpw'
 DIALOGFLOW_LANGUAGE_CODE = 'en'
-GOOGLE_APPLICATION_CREDENTIALS = r'newagent-qwujpw-e7668f705a24.json'
+GOOGLE_APPLICATION_CREDENTIALS = r'API_key\\Dialogflow_key.json.json'
 SESSION_ID = 'current-user-id'
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'newagent-qwujpw-e7668f705a24.json'
