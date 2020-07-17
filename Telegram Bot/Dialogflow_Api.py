@@ -7,10 +7,10 @@ import dialogflow
 from google.api_core.exceptions import InvalidArgument
 DIALOGFLOW_PROJECT_ID = 'newagent-qwujpw'
 DIALOGFLOW_LANGUAGE_CODE = 'en'
-GOOGLE_APPLICATION_CREDENTIALS = r'API_key\\Dialogflow_key.json.json'
+GOOGLE_APPLICATION_CREDENTIALS = r'API_key\\Dialogflow_key.json'
 SESSION_ID = 'current-user-id'
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'newagent-qwujpw-e7668f705a24.json'
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'API_key\\Dialogflow_key.json'
 session_client = dialogflow.SessionsClient()
 def rispondimi(testo):
     session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
