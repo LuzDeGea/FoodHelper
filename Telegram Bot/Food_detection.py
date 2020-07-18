@@ -1,6 +1,6 @@
 import io, os
 from google.cloud import vision
-from pprint import pprint
+from Nutrition import get_valori
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"API_key\\Vision_key.json"
 client = vision.ImageAnnotatorClient()
@@ -31,7 +31,7 @@ def food_detection():
 
     cibo_p = filtering(response)
     print(cibo_p)
-    return "Il cibo riconosciuto dovrebbe essere: " + cibo_p
+    return "Il cibo riconosciuto dovrebbe essere: " + cibo_p + "\n" + get_valori(cibo_p)
 
 def ConteinsLabel(response, in_lable):
     for food in response.label_annotations:
@@ -47,5 +47,3 @@ def filtering(response):
         return "Cibo non riconosciuto correttamente"
     else:
         return "Questo non mi sembra cibo"
-
-
