@@ -1,33 +1,17 @@
 import io, os
 from google.cloud import vision
-import requests
-from pprint import pprint
 
-pload = {
- "appId" : "042872e7",
- "appKey": "50de4a27e46b09fa8b66f1b41cbfe8bf",
-"fields": [
-    "item_name",
-    "brand_name",
-    "nf_calories",
-    "nf_sodium",
-    "nf_cholesterol",
-    "nf_vitamin_c_dv",
-    "item_type"
-  ],
- "query" : "apple"
-}
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"newagent-qwujpw-1825a9e19cd1.json"
+client = vision.ImageAnnotatorClient()
 
+file_name = "C:\\Users\\anton\\FoodHelper\\Telegram Bot\\Cibo.png"
 
-r = requests.post("https://api.nutritionix.com/v1_1/search", data = pload)
-print(r.json)
-item = r.json()["hits"][0]["fields"]
-str = "Nome: " + item["item_name"] + "\n" \
-    + "Calorie: " + str(item["nf_calories"]) + " kcal\n" \
-    + "Colesterolo: " + str(item["nf_cholesterol"]) + " mg\n" \
-    + "Sodio: " + str(item["nf_sodium"]) + " mg\n" \
-    + "Vitamina C: " + str(item["nf_vitamin_c_dv"]) + "%"
+def food_detection():
+    with io.open(file_name, 'rb') as image_file:
+        content = image_file.read()
 
-print(str)
+    image = vision.types.Image(content=content)
+    response = client.label_detection(image=image)
+    print(response)
 
 
