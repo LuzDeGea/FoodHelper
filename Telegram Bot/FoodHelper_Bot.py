@@ -55,6 +55,9 @@ def on_chat_message(msg):
         elif msg["text"].lower() == "/user":
             show_user(msg)
 
+        else:
+            bot.sendMessage(chat_id, "Spiacente, non riconosco questo comando.\nPer la lista dei comandi digitare il comando /help.")
+
 
 def new_user(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
