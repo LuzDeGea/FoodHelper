@@ -3,12 +3,16 @@ from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardButton, InlineKeyboardMarkup
 from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
+from Utente import Utente
 import time
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
 bot = telepot.Bot(TOKEN)
 
+stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5}
+utenti = {}
+acquisizione_dati = {}
 
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
@@ -24,9 +28,12 @@ def on_chat_message(msg):
 
     if content_type == "text":
         if msg["text"][0] != '/':
-            bot.sendMessage(chat_id, rispondimi(msg["text"]))
+            if not(chat_id in acquisizione_dati):
+                bot.sendMessage(chat_id, rispondimi(msg["text"]))
+            else:
+                new_user(msg,chat_id)
 
-        if msg["text"].lower() == "/info":
+        elif msg["text"].lower() == "/info":
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Informazioni", callback_data="info")],
                 [InlineKeyboardButton(text="Contatta uno sviluppatore", callback_data="developer"),
@@ -42,15 +49,15 @@ def on_chat_message(msg):
                                      "/user - show user \n")
 
         elif msg["text"].lower() == "/new":
-            bot.sendMessage(chat_id, "Answer the next questions to record your personal information.")
-            new_user(msg)
+            bot.sendMessage(chat_id, "Answer the next questions to record your personal information.\n Qual è il tuo nome?")
+            acquisizione_dati[chat_id] = stato_conversazione["Nome"]
+            utenti[chat_id] = Utente(chat_id)
 
         elif msg["text"].lower() == "/start":
             bot.sendMessage(chat_id, "Ciao, Sono il tuo FoodHelper! Puoi mandarmi le foto di quello "
                                      "che mangi per sapere  will reccomand you or not to eat it. Write /help for more information."
                                      "\n\nIt looks like you're an unregistered user. "
                                      "Please first reply next questions.")
-            new_user(msg)
 
         elif msg["text"].lower() == "/user":
             show_user(msg)
@@ -59,14 +66,40 @@ def on_chat_message(msg):
             bot.sendMessage(chat_id, "Spiacente, non riconosco questo comando.\nPer la lista dei comandi digitare il comando /help.")
 
 
-def new_user(msg):
-    content_type, chat_type, chat_id = telepot.glance(msg)
-    bot.sendMessage(chat_id, "\n\nHow old are you?")
+def new_user(msg, chat_id):
+    if acquisizione_dati[chat_id] == stato_conversazione["Nome"]:
+        utenti[chat_id].set_nome(msg["text"])
+        bot.sendMessage(chat_id, "Qual è il tuo cognome?")
+        acquisizione_dati[chat_id] = stato_conversazione["Cognome"]
 
+    elif acquisizione_dati[chat_id] == stato_conversazione["Cognome"]:
+        utenti[chat_id].set_cognome(msg["text"])
+        bot.sendMessage(chat_id, "Sei maschio o femmina?")
+        acquisizione_dati[chat_id] = stato_conversazione["Sesso"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Sesso"]:
+        utenti[chat_id].set_sesso(msg["text"])
+        bot.sendMessage(chat_id, "Qual è la tua data di nascita?")
+        acquisizione_dati[chat_id] = stato_conversazione["Eta"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Eta"]:
+        utenti[chat_id].set_data(msg["text"])
+        bot.sendMessage(chat_id, "Quanto sei alto?")
+        acquisizione_dati[chat_id] = stato_conversazione["Altezza"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Altezza"]:
+        utenti[chat_id].set_altezza(msg["text"])
+        bot.sendMessage(chat_id, "Quanto pesi?")
+        acquisizione_dati[chat_id] = stato_conversazione["Peso"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Peso"]:
+        utenti[chat_id].set_peso(msg["text"])
+        bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
+        acquisizione_dati.pop(chat_id)
 
 def show_user(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
-    bot.sendMessage(chat_id, "Your personal info:\n\n")
+    bot.sendMessage(chat_id, "Your personal info:\n\n" + str(utenti[chat_id]))
 
 
 def on_callback_query(msg):
