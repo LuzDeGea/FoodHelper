@@ -3,7 +3,7 @@ from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardButton, InlineKeyboardMarkup
 from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
-from Utente import Utente
+from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
@@ -65,17 +65,32 @@ def on_chat_message(msg):
         else:
             bot.sendMessage(chat_id, "Spiacente, non riconosco questo comando.\nPer la lista dei comandi digitare il comando /help.")
 
+'''
+
+!!!!!!!!!!!!!!!!
+
+SISTEMA IL CONTROLLO ALL'INTERNO DEL SET!!!!
+
+!!!!!!!!!!!!!
+
+'''
 
 def new_user(msg, chat_id):
     if acquisizione_dati[chat_id] == stato_conversazione["Nome"]:
-        utenti[chat_id].set_nome(msg["text"])
-        bot.sendMessage(chat_id, "Qual è il tuo cognome?")
-        acquisizione_dati[chat_id] = stato_conversazione["Cognome"]
+        if controllo_nome(msg["text"]) == False:
+            bot.sendMessage(chat_id, "Per favore inserisci correttamente il nome.")
+        else:
+            utenti[chat_id].set_nome(msg["text"])
+            bot.sendMessage(chat_id, "Qual è il tuo cognome?")
+            acquisizione_dati[chat_id] = stato_conversazione["Cognome"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Cognome"]:
-        utenti[chat_id].set_cognome(msg["text"])
-        bot.sendMessage(chat_id, "Sei maschio o femmina?")
-        acquisizione_dati[chat_id] = stato_conversazione["Sesso"]
+        if controllo_nome(msg["text"]) == False:
+            bot.sendMessage(chat_id, "Per favore inserisci correttamente il cognome.")
+        else:
+            utenti[chat_id].set_cognome(msg["text"])
+            bot.sendMessage(chat_id, "Sei maschio o femmina?")
+            acquisizione_dati[chat_id] = stato_conversazione["Sesso"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Sesso"]:
         utenti[chat_id].set_sesso(msg["text"])
@@ -83,24 +98,33 @@ def new_user(msg, chat_id):
         acquisizione_dati[chat_id] = stato_conversazione["Eta"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Eta"]:
-        utenti[chat_id].set_data(msg["text"])
-        bot.sendMessage(chat_id, "Quanto sei alto?")
-        acquisizione_dati[chat_id] = stato_conversazione["Altezza"]
+        if controllo_formato_data(msg["text"]) == False:
+            bot.sendMessage(chat_id, "Inserisci la data correttamente nel formato gg/mm/aa.")
+        else:
+            utenti[chat_id].set_data(msg["text"])
+            bot.sendMessage(chat_id, "Quanto sei alto?")
+            acquisizione_dati[chat_id] = stato_conversazione["Altezza"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Altezza"]:
-        utenti[chat_id].set_altezza(msg["text"])
-        bot.sendMessage(chat_id, "Quanto pesi?")
-        acquisizione_dati[chat_id] = stato_conversazione["Peso"]
+        if controllo_altezza(msg["text"]) == False:
+            bot.sendMessage(chat_id, "Per favore inserisci correttamente l'altezza in cm.")
+        else:
+            utenti[chat_id].set_altezza(msg["text"])
+            bot.sendMessage(chat_id, "Quanto pesi?")
+            acquisizione_dati[chat_id] = stato_conversazione["Peso"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Peso"]:
-        utenti[chat_id].set_peso(msg["text"])
-        bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
-        acquisizione_dati.pop(chat_id)
+        if controllo_peso(msg["text"]) == False:
+            bot.sendMessage(chat_id, "Per favore inserisci correttamente il peso in kg.")
+        else:
+            utenti[chat_id].set_peso(msg["text"])
+            bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
+            acquisizione_dati.pop(chat_id)
+
 
 def show_user(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     bot.sendMessage(chat_id, "Your personal info:\n\n" + str(utenti[chat_id]))
-
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor="callback_query")

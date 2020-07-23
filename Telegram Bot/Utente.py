@@ -1,19 +1,13 @@
 from datetime import datetime, date
+import re
+
+numeri = {"1","2","3","4","5","6","7","8","9","0"}
 
 class Utente:
-    def __init__(self, chat_id, nome, cognome, sesso, data_nascita, altezza, peso):
-        self.chat_id = chat_id
-        self.nome = nome
-        self.cognome = cognome
-        self.sesso = sesso
-        self.data_nascita = datetime.strptime(data_nascita, "%m/%d/%y")
-        self.altezza = altezza
-        self.peso = peso
-
     def __init__(self, chat_id):
         self.chat_id = chat_id
 
-    def chat_id(self, chat_id):
+    def set_chat_id(self, chat_id):
         self.chat_id = chat_id
 
     def set_nome(self, nome):
@@ -23,10 +17,17 @@ class Utente:
         self.cognome = cognome
 
     def set_sesso(self, sesso):
-        self.sesso = sesso
+        if sesso[0].lower() == 'm':
+            self.sesso = "maschio"
+        elif sesso[0].lower() == 'f':
+            self.sesso = "femmina"
+
 
     def set_data(self, data_nascita):
-        self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%y")
+        try:
+            self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%y")
+        except:
+            return False
 
     def set_altezza(self, altezza):
         self.altezza = altezza
@@ -61,3 +62,46 @@ class Utente:
     def __str__(self):
         return "Nome: " + str(self.nome) + "\nCognome: " + str(self.cognome) + "\nSesso: " + str(self.sesso) + \
                 "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "\nPeso: " + str(self.peso)
+
+def controllo_nome(nome):
+    regex = re.findall("\D+", nome)
+    char = ""
+    if regex:
+        for c in regex:
+            char += c
+        return char
+    return False
+
+def controllo_formato_data(data):
+    try:
+        n_data = datetime.strptime(data, "%d/%m/%y")
+        if (date.today().year - n_data.year) > 17:
+            return data
+        return False
+    except ValueError:
+        return False
+
+def controllo_cifre(numero):
+    regex = re.findall("\d", numero)
+    char = ""
+    if regex:
+        for c in regex:
+            char += c
+        return int(char)
+    return False
+
+def controllo_altezza(altezza):
+    h = controllo_cifre(altezza)
+    if 150 < h < 210:
+        return h
+    else:
+            return False
+
+def controllo_peso(peso):
+    w = controllo_cifre(peso)
+    if 45 < w < 130:
+        return w
+    else:
+        return False
+
+
