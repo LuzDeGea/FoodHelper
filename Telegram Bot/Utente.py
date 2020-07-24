@@ -22,7 +22,6 @@ class Utente:
         elif sesso[0].lower() == 'f':
             self.sesso = "femmina"
 
-
     def set_data(self, data_nascita):
         try:
             self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%y")
@@ -46,6 +45,9 @@ class Utente:
 
     def get_sesso(self):
         return self.sesso
+
+    def get_data(self):
+        return self.data_nascita
 
     def get_eta(self):
         if date.today().month <= self.data_nascita.month:

@@ -31,7 +31,7 @@ def on_chat_message(msg):
             if not(chat_id in acquisizione_dati):
                 bot.sendMessage(chat_id, rispondimi(msg["text"]))
             else:
-                new_user(msg,chat_id)
+                new_user(msg, chat_id)
 
         elif msg["text"].lower() == "/info":
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
@@ -49,7 +49,7 @@ def on_chat_message(msg):
                                      "/user - show user \n")
 
         elif msg["text"].lower() == "/new":
-            bot.sendMessage(chat_id, "Answer the next questions to record your personal information.\n Qual è il tuo nome?")
+            bot.sendMessage(chat_id, "Answer the next questions to record your personal information.\nQual è il tuo nome?")
             acquisizione_dati[chat_id] = stato_conversazione["Nome"]
             utenti[chat_id] = Utente(chat_id)
 
@@ -65,59 +65,57 @@ def on_chat_message(msg):
         else:
             bot.sendMessage(chat_id, "Spiacente, non riconosco questo comando.\nPer la lista dei comandi digitare il comando /help.")
 
-'''
-
-!!!!!!!!!!!!!!!!
-
-SISTEMA IL CONTROLLO ALL'INTERNO DEL SET!!!!
-
-!!!!!!!!!!!!!
-
-'''
-
 def new_user(msg, chat_id):
     if acquisizione_dati[chat_id] == stato_conversazione["Nome"]:
-        if controllo_nome(msg["text"]) == False:
+        nome = controllo_nome(msg["text"])
+        if nome == False:
             bot.sendMessage(chat_id, "Per favore inserisci correttamente il nome.")
         else:
-            utenti[chat_id].set_nome(msg["text"])
+            utenti[chat_id].set_nome(nome)
             bot.sendMessage(chat_id, "Qual è il tuo cognome?")
             acquisizione_dati[chat_id] = stato_conversazione["Cognome"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Cognome"]:
-        if controllo_nome(msg["text"]) == False:
+        cognome = controllo_nome(msg["text"])
+        if cognome == False:
             bot.sendMessage(chat_id, "Per favore inserisci correttamente il cognome.")
         else:
-            utenti[chat_id].set_cognome(msg["text"])
-            bot.sendMessage(chat_id, "Sei maschio o femmina?")
+            utenti[chat_id].set_cognome(cognome)
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Maschio", callback_data="sesso_maschio"),
+                 InlineKeyboardButton(text="Femmina", callback_data="sesso_femmina")]
+            ])
+            bot.sendMessage(chat_id, "Sei maschio o femmina?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Sesso"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Sesso"]:
-        utenti[chat_id].set_sesso(msg["text"])
         bot.sendMessage(chat_id, "Qual è la tua data di nascita?")
         acquisizione_dati[chat_id] = stato_conversazione["Eta"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Eta"]:
-        if controllo_formato_data(msg["text"]) == False:
+        data = controllo_formato_data(msg["text"])
+        if data == False:
             bot.sendMessage(chat_id, "Inserisci la data correttamente nel formato gg/mm/aa.")
         else:
-            utenti[chat_id].set_data(msg["text"])
+            utenti[chat_id].set_data(data)
             bot.sendMessage(chat_id, "Quanto sei alto?")
             acquisizione_dati[chat_id] = stato_conversazione["Altezza"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Altezza"]:
-        if controllo_altezza(msg["text"]) == False:
+        altezza = controllo_altezza(msg["text"])
+        if altezza == False:
             bot.sendMessage(chat_id, "Per favore inserisci correttamente l'altezza in cm.")
         else:
-            utenti[chat_id].set_altezza(msg["text"])
+            utenti[chat_id].set_altezza(altezza)
             bot.sendMessage(chat_id, "Quanto pesi?")
             acquisizione_dati[chat_id] = stato_conversazione["Peso"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Peso"]:
-        if controllo_peso(msg["text"]) == False:
+        peso = controllo_peso(msg["text"])
+        if peso == False:
             bot.sendMessage(chat_id, "Per favore inserisci correttamente il peso in kg.")
         else:
-            utenti[chat_id].set_peso(msg["text"])
+            utenti[chat_id].set_peso(peso)
             bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
 
@@ -138,6 +136,17 @@ def on_callback_query(msg):
                                  "antoniofrancescofiore98@gmail.com")
     elif query_data == "version":
         bot.answerCallbackQuery(query_id, "Version Beta 1.0")
+
+    elif query_data == "sesso_maschio":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_sesso("Maschio")
+        new_user(msg, from_id)
+
+    elif query_data == "sesso_femmina":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_sesso("Femmina")
+        new_user(msg, from_id)
+
 
 
 telepot.loop.MessageLoop(bot, {"chat": on_chat_message, "callback_query": on_callback_query}).run_as_thread()
