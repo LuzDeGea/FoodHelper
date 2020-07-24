@@ -1,8 +1,6 @@
 from datetime import datetime, date
 import re
 
-numeri = {"1","2","3","4","5","6","7","8","9","0"}
-
 class Utente:
     def __init__(self, chat_id):
         self.chat_id = chat_id
