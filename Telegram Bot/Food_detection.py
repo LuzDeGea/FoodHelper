@@ -31,7 +31,10 @@ def food_detection():
 
     cibo_p = filtering(response)
     print(cibo_p)
-    return "Il cibo riconosciuto dovrebbe essere: " + cibo_p + "\n" + get_valori(cibo_p)
+    if cibo_p:
+        return "Il cibo riconosciuto dovrebbe essere: " + cibo_p + "\n" + get_valori(cibo_p)
+    else:
+        return "Cibo non riconosciuto correttamente"
 
 def ConteinsLabel(response, in_lable):
     for food in response.label_annotations:
@@ -40,10 +43,10 @@ def ConteinsLabel(response, in_lable):
     return False
 
 def filtering(response):
-    if ConteinsLabel(response,"Food")==True or ConteinsLabel(response,"Plant")==True:
+    if ConteinsLabel(response,"Food") or ConteinsLabel(response,"Plant"):
         for food in response.label_annotations:
             if not(food.description in scarti):
                 return food.description
-        return "Cibo non riconosciuto correttamente"
+        return False
     else:
-        return "Questo non mi sembra cibo"
+        return False
