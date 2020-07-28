@@ -10,7 +10,7 @@ TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
 bot = telepot.Bot(TOKEN)
 
-stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5}
+stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6}
 utenti = {}
 acquisizione_dati = {}
 
@@ -60,7 +60,7 @@ def on_chat_message(msg):
                                      "Please first reply next questions.")
 
         elif msg["text"].lower() == "/user":
-            show_user(msg)
+            show_user(chat_id)
 
         else:
             bot.sendMessage(chat_id, "Spiacente, non riconosco questo comando.\nPer la lista dei comandi digitare il comando /help.")
@@ -116,12 +116,28 @@ def new_user(msg, chat_id):
             bot.sendMessage(chat_id, "Per favore inserisci correttamente il peso in kg.")
         else:
             utenti[chat_id].set_peso(peso)
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Sedentaria", callback_data="att_sedentaria"),
+                 InlineKeyboardButton(text="Leggera", callback_data="att_leggera"),
+                 InlineKeyboardButton(text="Moderata", callback_data="att_moderata")],
+                [InlineKeyboardButton(text="Attiva", callback_data="att_attiva"),
+                 InlineKeyboardButton(text="Molto attiva", callback_data="att_strong")]
+            ])
+            bot.sendMessage(chat_id, "Descrivi il tuo livello di attività fisica: \n"\
+                                     "Sedentaria  -  Lavoro da scrivania e non si pratica sport \n"\
+                                     "Leggera  -  Lavoro da scrivania + sport 2, 3 volte la settimana \n"\
+                                     "Moderata  -  Lavoro leggero + sport 3, 5 volte la settimana \n"\
+                                     "Attiva  -  Lavoro di tipo pesante \n"\
+                                     "Molto attiva  -  Lavoro pesante + sport 2, 3 volte la settimana",
+                            reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Attività"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Attività"]:
             bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
 
 
-def show_user(msg):
-    content_type, chat_type, chat_id = telepot.glance(msg)
+def show_user(chat_id):
     bot.sendMessage(chat_id, "Your personal info:\n\n" + str(utenti[chat_id]))
 
 def on_callback_query(msg):
@@ -146,6 +162,32 @@ def on_callback_query(msg):
         bot.answerCallbackQuery(query_id)
         utenti[from_id].set_sesso("Femmina")
         new_user(msg, from_id)
+
+    elif query_data == "att_sedentaria":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_attività("Sedentaria")
+        new_user(msg, from_id)
+
+    elif query_data == "att_leggera":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_attività("Leggera")
+        new_user(msg, from_id)
+
+    elif query_data == "att_moderata":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_attività("Moderata")
+        new_user(msg, from_id)
+
+    elif query_data == "att_attiva":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_attività("Attiva")
+        new_user(msg, from_id)
+
+    elif query_data == "att_strong":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_attività("Molto attiva")
+        new_user(msg, from_id)
+
 
 
 

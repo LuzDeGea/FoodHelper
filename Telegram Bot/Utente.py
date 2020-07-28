@@ -1,6 +1,8 @@
 from datetime import datetime, date
 import re
 
+fattore_metabolismo = {"Sedentaria" : 1.2, "Leggera" : 1.375, "Moderata" : 1.55, "Attiva" : 1.725, "Molto attiva" : 1.9}
+
 class Utente:
     def __init__(self, chat_id):
         self.chat_id = chat_id
@@ -15,10 +17,7 @@ class Utente:
         self.cognome = cognome
 
     def set_sesso(self, sesso):
-        if sesso[0].lower() == 'm':
-            self.sesso = "maschio"
-        elif sesso[0].lower() == 'f':
-            self.sesso = "femmina"
+        self.sesso = sesso
 
     def set_data(self, data_nascita):
         try:
@@ -31,6 +30,9 @@ class Utente:
 
     def set_peso(self, peso):
         self.peso = peso
+
+    def set_attività(self, attivita):
+        self.attivita = attivita
 
     def get_chat_id(self):
         return self.chat_id
@@ -59,9 +61,19 @@ class Utente:
     def get_peso(self):
         return self.peso
 
+    def get_attivita(self):
+        return self.attivita
+
+    def fabbisogno_calorico(self):
+        if self.sesso == "Maschio":
+            return ((self.peso*10) + (self.altezza*6.25) - (5*self.get_eta()) + 5) * fattore_metabolismo[self.attivita]
+        elif self.sesso == "Femmina":
+            return ((self.peso*10) + (self.altezza*6.25) - (5*self.get_eta())-161) * fattore_metabolismo[self.attivita]
+
     def __str__(self):
         return "Nome: " + str(self.nome) + "\nCognome: " + str(self.cognome) + "\nSesso: " + str(self.sesso) + \
-                "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "\nPeso: " + str(self.peso)
+                "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "\nPeso: " + str(self.peso) +\
+                "\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " + str(self.fabbisogno_calorico())
 
 def controllo_nome(nome):
     regex = re.findall("\D+", nome)
@@ -103,5 +115,3 @@ def controllo_peso(peso):
         return w
     else:
         return False
-
-
