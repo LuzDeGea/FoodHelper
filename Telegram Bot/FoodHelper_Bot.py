@@ -5,6 +5,7 @@ from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
 from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
+from Database_utility import inserisci_utente,get_utente
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
@@ -135,10 +136,11 @@ def new_user(msg, chat_id):
     elif acquisizione_dati[chat_id] == stato_conversazione["Attività"]:
             bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
+            inserisci_utente(utenti.pop(chat_id))
 
 
 def show_user(chat_id):
-    bot.sendMessage(chat_id, "Your personal info:\n\n" + str(utenti[chat_id]))
+    bot.sendMessage(chat_id, "Your personal info:\n\n" + str(get_utente(chat_id)))
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor="callback_query")

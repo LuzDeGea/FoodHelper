@@ -7,6 +7,15 @@ class Utente:
     def __init__(self, chat_id):
         self.chat_id = chat_id
 
+    def set_utente(self, nome, cognome, sesso, data, altezza, peso, attivita):
+        self.nome=nome
+        self.cognome=cognome
+        self.sesso=sesso
+        self.data_nascita=data
+        self.altezza=altezza
+        self.peso=peso
+        self.attivita=attivita
+
     def set_chat_id(self, chat_id):
         self.chat_id = chat_id
 
@@ -21,7 +30,7 @@ class Utente:
 
     def set_data(self, data_nascita):
         try:
-            self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%y")
+            self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%Y")
         except:
             return False
 
@@ -86,11 +95,15 @@ def controllo_nome(nome):
 
 def controllo_formato_data(data):
     try:
-        n_data = datetime.strptime(data, "%d/%m/%y")
+        n_data = datetime.strptime(data, "%d/%m/%Y")
+        print(date.today().year)
+        print(n_data.year)
         if (date.today().year - n_data.year) > 17:
             return data
+        print("brbrbrbrbrbr")
         return False
     except ValueError:
+        print("exception")
         return False
 
 def controllo_cifre(numero):
