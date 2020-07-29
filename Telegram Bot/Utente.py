@@ -11,9 +11,9 @@ class Utente:
         self.nome=nome
         self.cognome=cognome
         self.sesso=sesso
-        self.data_nascita=data
-        self.altezza=altezza
-        self.peso=peso
+        self.set_data(data)
+        self.altezza=int(altezza)
+        self.peso=int(peso)
         self.attivita=attivita
         self.diabete = b_diab
         self.colesterolo = b_cole
@@ -45,10 +45,14 @@ class Utente:
         self.sesso = sesso
 
     def set_data(self, data_nascita):
+        print(data_nascita)
         try:
             self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%Y")
         except:
-            return False
+            try:
+                self.data_nascita = datetime.strptime(data_nascita, "%Y-%m-%d")
+            except:
+                return False
 
     def set_altezza(self, altezza):
         self.altezza = altezza
