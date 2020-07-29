@@ -5,7 +5,7 @@ from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
 from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
-from Database_utility import inserisci_utente,get_utente
+from collegamentoSito import inserisci_utente,get_utente
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
