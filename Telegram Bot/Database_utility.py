@@ -15,8 +15,8 @@ def inserisci_utente(utente):
     values =(utente.get_chat_id(),)
     mycursor.execute(query, values)
     mydb.commit()
-    query = "INSERT INTO utente (chat_id,nome,cognome,sesso,data_nascita,altezza,peso,attivita) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-    values =(utente.get_chat_id(),utente.get_nome(),utente.get_cognome(),utente.get_sesso(),utente.get_data(),utente.get_altezza(),utente.get_peso(),utente.get_attivita())
+    query = "INSERT INTO utente (chat_id,nome,cognome,sesso,data_nascita,altezza,peso,attivita,b_diab,b_cole,b_iper,b_ipo) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    values =(utente.get_chat_id(),utente.get_nome(),utente.get_cognome(),utente.get_sesso(),utente.get_data(),utente.get_altezza(),utente.get_peso(),utente.get_attivita(),utente.get_diabete(),utente.get_colesterolo(),utente.get_iper_tens(),utente.get_ipo_tens())
     mycursor.execute(query, values)
     mydb.commit()
 
@@ -26,5 +26,5 @@ def get_utente(chat_id):
     print(result)
     print(result[0][0])
     utente = Utente(result[0][0])
-    utente.set_utente(result[0][1],result[0][2],result[0][3],result[0][4],result[0][5],result[0][6],result[0][7])
+    utente.set_utente(result[0][1],result[0][2],result[0][3],result[0][4],result[0][5],result[0][6],result[0][7],result[0][8],result[0][9],result[0][10],result[0][11])
     return utente
