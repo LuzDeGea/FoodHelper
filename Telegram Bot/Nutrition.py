@@ -1,4 +1,5 @@
 import requests
+from Food import Food
 
 def get_valori(food):
     #File jason da inviare in POST
@@ -6,25 +7,19 @@ def get_valori(food):
         "appId": "042872e7",
         "appKey": "50de4a27e46b09fa8b66f1b41cbfe8bf",
         "fields": [
-            "item_name",
-            "brand_name",
             "nf_calories",
-            "nf_sodium",
+            "nf_total_carbohydrate",
             "nf_cholesterol",
-            "nf_vitamin_c_dv",
-            "item_type"
+            "nf_total_fat",
+            "nf_ingredient_statement",
+            "nf_sodium",
+            "nf_sugars"
         ],
         "query": food
     }
     #Richiesta HTTP POST
     r = requests.post("https://api.nutritionix.com/v1_1/search", data = pload)
-
-    #Risultato
-    item = r.json()["hits"][0]["fields"]
-    value = "Nome: " + food + "\n" \
-        + "Calorie: " + str(item["nf_calories"]) + " kcal\n" \
-        + "Colesterolo: " + str(item["nf_cholesterol"]) + " mg\n" \
-        + "Sodio: " + str(item["nf_sodium"]) + " mg\n" \
-        + "Vitamina C: " + str(item["nf_vitamin_c_dv"]) + "%"
-
-    return value
+    if r.json()["total"] == 0:
+        return "Non ho trovato informazioni relative a questo cibo."
+    else:
+        return str(Food(food, r.json()["hits"][0]["fields"]))
