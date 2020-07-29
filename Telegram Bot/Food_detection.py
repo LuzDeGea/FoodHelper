@@ -26,11 +26,7 @@ def food_detection():
     image = vision.types.Image(content=content)
     response = client.label_detection(image=image)
 
-    #for food in response.label_annotations:
-    #   print(food.description)
-
     cibo_p = filtering(response)
-    print(cibo_p)
     if cibo_p:
         return "Il cibo riconosciuto dovrebbe essere: " + cibo_p + "\n" + get_valori(cibo_p)
     else:
