@@ -7,7 +7,7 @@ class Utente:
     def __init__(self, chat_id):
         self.chat_id = chat_id
 
-    def set_utente(self, nome, cognome, sesso, data, altezza, peso, attivita):
+    def set_utente(self, nome, cognome, sesso, data, altezza, peso, attivita, b_diab, b_cole, b_iper, b_ipo):
         self.nome=nome
         self.cognome=cognome
         self.sesso=sesso
@@ -15,6 +15,22 @@ class Utente:
         self.altezza=altezza
         self.peso=peso
         self.attivita=attivita
+        self.diabete = b_diab
+        self.colesterolo = b_cole
+        self.iper_tens = b_iper
+        self.ipo_tens = b_ipo
+
+    def set_diabete(self, b):
+        self.diabete = b
+
+    def set_colesterolo(self, b):
+        self.colesterolo = b
+
+    def set_iper_tens(self, b):
+        self.iper_tens = b
+
+    def set_ipo_tens(self, b):
+        self.ipo_tens = b
 
     def set_chat_id(self, chat_id):
         self.chat_id = chat_id
@@ -42,6 +58,18 @@ class Utente:
 
     def set_attività(self, attivita):
         self.attivita = attivita
+
+    def get_diabete(self):
+        return self.diabete
+
+    def get_colesterolo(self):
+        return self.colesterolo
+
+    def get_iper_tens(self):
+        return self.iper_tens
+
+    def get_ipo_tens(self):
+        return self.ipo_tens
 
     def get_chat_id(self):
         return self.chat_id
@@ -128,3 +156,4 @@ def controllo_peso(peso):
         return w
     else:
         return False
+
