@@ -43,22 +43,21 @@ def on_chat_message(msg):
             bot.sendMessage(chat_id, "Selezionare uno dei tre comandi disponibili", reply_markup=keyboard)
 
         elif msg["text"].lower() == "/help":
-            bot.sendMessage(chat_id, "Here is the list of available commands: \n\n"
-                                     "/info - shows information about the software\n"
-                                     "/help - shows the commands list \n"
-                                     "/new - acquires information about the user\n"
-                                     "/user - show user \n")
+            bot.sendMessage(chat_id, "Questa è la lista dei comandi disponibili: \n\n"
+                                     "/info - mostra le informazioni del bot\n"
+                                     "/help - mostra la lista dei comandi \n"
+                                     "/new - registrare un nuovo utente\n"
+                                     "/user - mostra l'utente \n")
 
         elif msg["text"].lower() == "/new":
-            bot.sendMessage(chat_id, "Answer the next questions to record your personal information.\nQual è il tuo nome?")
+            bot.sendMessage(chat_id, "Ora ti verranno poste alcune domande per la profilazione.\nQual è il tuo nome?")
             acquisizione_dati[chat_id] = stato_conversazione["Nome"]
             utenti[chat_id] = Utente(chat_id)
 
         elif msg["text"].lower() == "/start":
-            bot.sendMessage(chat_id, "Ciao, Sono il tuo FoodHelper! Puoi mandarmi le foto di quello "
-                                     "che mangi per sapere  will reccomand you or not to eat it. Write /help for more information."
-                                     "\n\nIt looks like you're an unregistered user. "
-                                     "Please first reply next questions.")
+            bot.sendMessage(chat_id, "Ciao, Sono il tuo FoodHelper! \nPuoi mandarmi le foto di quello "
+                                     "che mangi per sapere  se puoi mangiarlo oppure no.\n scrivi /help per altre informazioni."
+                                     "\n\nUtilizza /new per registrarti come nuovo utente.")
 
         elif msg["text"].lower() == "/user":
             show_user(chat_id)
@@ -134,6 +133,38 @@ def new_user(msg, chat_id):
             acquisizione_dati[chat_id] = stato_conversazione["Attività"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Attività"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="diabete_si"),
+                 InlineKeyboardButton(text="No", callback_data="diabete_no")]
+            ])
+            bot.sendMessage(chat_id, "Sei diabetico?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Diabete"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Diabete"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="colesterolo_si"),
+                 InlineKeyboardButton(text="No", callback_data="colesterolo_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai il colesterolo?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Colesterolo"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Colesterolo"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="iper_tens_si"),
+                 InlineKeyboardButton(text="No", callback_data="iper_tens_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai l'iper-tensione?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Iper_tens"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Iper_tens"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="ipo_tens_si"),
+                 InlineKeyboardButton(text="No", callback_data="ipo_tens_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai l'ipo-tensione?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Ipo_tens"]
+
+    ## ##
             bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
             inserisci_utente(utenti.pop(chat_id))
@@ -151,7 +182,9 @@ def on_callback_query(msg):
     elif query_data == "developer":
         bot.answerCallbackQuery(query_id)
         bot.sendMessage(from_id, "Per aiutarci a migliorare o per maggiori informazioni contattare: "
-                                 "antoniofrancescofiore98@gmail.com")
+                                 "antoniofrancescofiore98@gmail.com"
+                                 "vinci19997@gmail.com"
+                                 "antoniogrisulli23@gamil.com")
     elif query_data == "version":
         bot.answerCallbackQuery(query_id, "Version Beta 1.0")
 
@@ -190,6 +223,45 @@ def on_callback_query(msg):
         utenti[from_id].set_attività("Molto attiva")
         new_user(msg, from_id)
 
+    elif query_data == "diabete_si":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_diabete(True)
+        new_user(msg, from_id)
+
+    elif query_data == "diabete_no":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_diabete(False)
+        new_user(msg, from_id)
+
+    elif query_data == "colesterolo_si":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_colesterolo(True)
+        new_user(msg, from_id)
+
+    elif query_data == "colesterolo_no":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_colesterolo(False)
+        new_user(msg, from_id)
+
+    elif query_data == "iper_tens_si":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_iper_tens(True)
+        new_user(msg, from_id)
+
+    elif query_data == "iper_tens_no":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_iper_tens(False)
+        new_user(msg, from_id)
+
+    elif query_data == "ipo_tens_si":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_ipo_tens(True)
+        new_user(msg, from_id)
+
+    elif query_data == "ipo_tens_no":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_ipo_tens(False)
+        new_user(msg, from_id)
 
 
 
