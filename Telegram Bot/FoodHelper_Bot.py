@@ -11,7 +11,7 @@ TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
 bot = telepot.Bot(TOKEN)
 
-stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6}
+stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6,"Diabete" : 7, "Colesterolo" : 8,"Iper_tens" : 9, "Ipo_tens" : 10}
 utenti = {}
 acquisizione_dati = {}
 
@@ -95,7 +95,7 @@ def new_user(msg, chat_id):
     elif acquisizione_dati[chat_id] == stato_conversazione["Eta"]:
         data = controllo_formato_data(msg["text"])
         if data == False:
-            bot.sendMessage(chat_id, "Inserisci la data correttamente nel formato gg/mm/aa.")
+            bot.sendMessage(chat_id, "Inserisci la data correttamente nel formato gg/mm/aaaa.")
         else:
             utenti[chat_id].set_data(data)
             bot.sendMessage(chat_id, "Quanto sei alto?")
@@ -164,7 +164,7 @@ def new_user(msg, chat_id):
             bot.sendMessage(chat_id, "Hai l'ipo-tensione?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Ipo_tens"]
 
-    ## ##
+    elif acquisizione_dati[chat_id] == stato_conversazione["Ipo_tens"]:
             bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
             inserisci_utente(utenti.pop(chat_id))
@@ -200,27 +200,27 @@ def on_callback_query(msg):
 
     elif query_data == "att_sedentaria":
         bot.answerCallbackQuery(query_id)
-        utenti[from_id].set_attività("Sedentaria")
+        utenti[from_id].set_attivita("Sedentaria")
         new_user(msg, from_id)
 
     elif query_data == "att_leggera":
         bot.answerCallbackQuery(query_id)
-        utenti[from_id].set_attività("Leggera")
+        utenti[from_id].set_attivita("Leggera")
         new_user(msg, from_id)
 
     elif query_data == "att_moderata":
         bot.answerCallbackQuery(query_id)
-        utenti[from_id].set_attività("Moderata")
+        utenti[from_id].set_attivita("Moderata")
         new_user(msg, from_id)
 
     elif query_data == "att_attiva":
         bot.answerCallbackQuery(query_id)
-        utenti[from_id].set_attività("Attiva")
+        utenti[from_id].set_attivita("Attiva")
         new_user(msg, from_id)
 
     elif query_data == "att_strong":
         bot.answerCallbackQuery(query_id)
-        utenti[from_id].set_attività("Molto attiva")
+        utenti[from_id].set_attivita("Molto attiva")
         new_user(msg, from_id)
 
     elif query_data == "diabete_si":
