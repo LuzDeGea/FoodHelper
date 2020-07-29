@@ -56,7 +56,7 @@ class Utente:
     def set_peso(self, peso):
         self.peso = peso
 
-    def set_attività(self, attivita):
+    def set_attivita(self, attivita):
         self.attivita = attivita
 
     def get_diabete(self):
