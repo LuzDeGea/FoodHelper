@@ -1,7 +1,7 @@
 from datetime import datetime, date
+from Food import Food
 import re
 
-semaforo = {"Consigliato" : 1, "Sconsigliato" : 0, "Proibito" : -1}
 fattore_metabolismo = {"Sedentaria" : 1.2, "Leggera" : 1.375, "Moderata" : 1.55, "Attiva" : 1.725, "Molto attiva" : 1.9}
 
 class Utente:
@@ -131,6 +131,30 @@ class Utente:
                 "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "cm\nPeso: " + str(self.peso) +\
                 "kg\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " + str(self.fabbisogno_calorico())
 
+    def can_eat(self, cibo):
+        feedback = ""
+        if self.get_nefropatia():
+            risposta = cibo.can_eat_nefropatia(self)
+            if risposta == "Sconsigliato":
+                feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppe proteine o sodio"
+            if risposta == "Proibito":
+                return "Questo piatto contiene troppe proteine e sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
+        elif self.get_iper_tens():
+            risposta = cibo.can_eat_iperteso(self)
+            if risposta == "Sconsigliato":
+                feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppo sodio"
+            if risposta == "Proibito":
+                return "Questo piatto contiene troppo sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
+        if self.get_anemia_sideropenica():
+            risposta = cibo.can_eat_anemico(self)
+            if risposta == "Sconsigliato":
+                feedback = "Puoi mangiare questo piatto ma ti consigliamo di mangiare anche piatti evanti più ferro"
+        if feedback == "":
+            return "Puoi mangiare tranquillamente questo cibo!"
+        else:
+            return feedback
+            
+
 def controllo_nome(nome):
     regex = re.findall("\D+", nome)
     char = ""
@@ -175,4 +199,3 @@ def controllo_peso(peso):
         return w
     else:
         return False
-
