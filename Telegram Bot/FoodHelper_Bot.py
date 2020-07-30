@@ -11,7 +11,7 @@ TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
 bot = telepot.Bot(TOKEN)
 
-stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6,"Diabete" : 7, "Colesterolo" : 8,"Iper_tens" : 9, "Ipo_tens" : 10}
+stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6,"Diabete" : 7, "Colesterolo" : 8,"Iper_tens" : 9, "Ipo_tens" : 10,"Nefropatia" : 11,"Anemia_sideropenica" : 12}
 utenti = {}
 acquisizione_dati = {}
 
@@ -134,12 +134,19 @@ def new_user(msg, chat_id):
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Attività"]:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="iper_tens_si"),
+                InlineKeyboardButton(text="No", callback_data="iper_tens_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai l'iper-tensione?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Iper_tens"]
+            '''
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Si", callback_data="diabete_si"),
                  InlineKeyboardButton(text="No", callback_data="diabete_no")]
             ])
             bot.sendMessage(chat_id, "Sei diabetico?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Diabete"]
-
+            '''
     elif acquisizione_dati[chat_id] == stato_conversazione["Diabete"]:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Si", callback_data="colesterolo_si"),
@@ -158,13 +165,36 @@ def new_user(msg, chat_id):
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Iper_tens"]:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="Nefropatia_si"),
+                InlineKeyboardButton(text="No", callback_data="Nefropatia_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai la Nefropatia?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Nefropatia"]
+            '''
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Si", callback_data="ipo_tens_si"),
                  InlineKeyboardButton(text="No", callback_data="ipo_tens_no")]
             ])
             bot.sendMessage(chat_id, "Hai l'ipo-tensione?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Ipo_tens"]
-
+            '''
     elif acquisizione_dati[chat_id] == stato_conversazione["Ipo_tens"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="Nefropatia_si"),
+                 InlineKeyboardButton(text="No", callback_data="Nefropatia_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai la Nefropatia?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Nefropatia"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Nefropatia"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="Anemia_sideropenica_si"),
+                 InlineKeyboardButton(text="No", callback_data="Anemia_sideropenica_no")]
+            ])
+            bot.sendMessage(chat_id, "Hai l'Anemia_sideropenica?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Anemia_sideropenica"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Anemia_sideropenica"]:
             bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
             inserisci_utente(utenti.pop(chat_id))
@@ -261,6 +291,26 @@ def on_callback_query(msg):
     elif query_data == "ipo_tens_no":
         bot.answerCallbackQuery(query_id)
         utenti[from_id].set_ipo_tens(False)
+        new_user(msg, from_id)
+
+    elif query_data == "Nefropatia_si":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_nefropatia(True)
+        new_user(msg, from_id)
+
+    elif query_data == "Nefropatia_no":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_nefropatia(False)
+        new_user(msg, from_id)
+
+    elif query_data == "Anemia_sideropenica_si":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_anemia_sideropenica(True)
+        new_user(msg, from_id)
+
+    elif query_data == "Anemia_sideropenica_no":
+        bot.answerCallbackQuery(query_id)
+        utenti[from_id].set_anemia_sideropenica(False)
         new_user(msg, from_id)
 
 
