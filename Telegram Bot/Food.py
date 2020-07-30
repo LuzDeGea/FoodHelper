@@ -1,4 +1,9 @@
-IPERTESO : float = 485
+from Utente import Utente
+
+IPERTESO : float = 1940
+NEFRO: float = 0.7
+ANEMICO_MASCHIO: float = 0.10
+ANEMICO_FEMMINA: float = 0.15
 
 class Food:
     def __init__(self, food_name, nutri):
@@ -6,8 +11,10 @@ class Food:
         self.calorie = nutri["nf_calories"]
         self.carboidrati = nutri["nf_total_carbohydrate"]
         self.colesterolo = nutri["nf_cholesterol"]
+        self.ferro = nutri["nf_iron_dv"]
         self.grassi = nutri["nf_total_fat"]
         self.ingredienti = nutri["nf_ingredient_statement"]
+        self.proteine = nutri["nf_protein"]
         self.sodio = nutri["nf_sodium"]
         self.zuccheri = nutri["nf_sugars"]
 
@@ -66,10 +73,48 @@ class Food:
     
     '''
     def can_eat_iperteso(self):
-        if self.sodio < IPERTESO:
-            return True
+        if self.sodio < IPERTESO/4:
+            return "Consigliato"
+        elif self.sodio < IPERTESO/3:
+            return "Sconsigliato"
         else:
-            return False
+            return "Proibito"
+
+
+    '''
+    Per i nefropatici devo considerare il livello di proteine e di sodio.
+    Se il livello di proteine è accattabile considero solo il livello di sodio, 
+    invece se è pessimo sconsiglio a prescindere il cibo.
+    Altrimenti se il livello di proteine non è estramemente consigliabile 
+    agisco in base al livello di sodio.
+    '''
+    def can_eat_nefropatia(self, utente):
+        if self.proteine < (utente.peso * 0.7)/4:
+            return utente.can_eat_iperteso()
+        elif self.proteine < (utente.peso * 0.7)/3:
+            if utente.can_eat_iperteso() == "Consigliato":
+                return "Sconsigliato"
+            else:
+                return "Proibito"
+        else:
+            return "Proibito"
+
+
+    '''
+    Considero il livello di ferro da assumere in base al sesso del utente
+    e se l'utente è o meno in menopausa.
+    '''
+    def can_eat_anemico(self, utente):
+        if utente.get_sesso() == "Femmina" and utente.get_eta() < 50:
+            ferro_consigliato = ANEMICO_FEMMINA
+        else:
+            ferro_consigliato = ANEMICO_MASCHIO
+        if self.ferro < ferro_consigliato/3:
+            return "Sconsigliato"
+            #"Puoi mangiarlo, ma ti consiglio di assumero alimenti con più ferro!"
+        else:
+            return "Consigliato"
+
 
     def __str__(self):
         food = "Calorie: " + str(self.calorie) + " kcal\n" \
@@ -80,4 +125,6 @@ class Food:
             + "Sodio: " + str(self.sodio) + " mg\n" \
             + "Zuccheri: " + str(self.zuccheri) + "g"
         return food
+
+
 
