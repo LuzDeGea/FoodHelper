@@ -7,7 +7,7 @@ class Utente:
     def __init__(self, chat_id):
         self.chat_id = chat_id
 
-    def set_utente(self, nome, cognome, sesso, data, altezza, peso, attivita, b_diab, b_cole, b_iper, b_ipo):
+    def set_utente(self, nome, cognome, sesso, data, altezza, peso, attivita, b_iper,nefropatia,anemia_sideropenica):
         self.nome=nome
         self.cognome=cognome
         self.sesso=sesso
@@ -15,10 +15,12 @@ class Utente:
         self.altezza=int(altezza)
         self.peso=int(peso)
         self.attivita=attivita
-        self.diabete = b_diab
-        self.colesterolo = b_cole
+        #self.diabete = b_diab
+        #self.colesterolo = b_cole
         self.iper_tens = b_iper
-        self.ipo_tens = b_ipo
+        #self.ipo_tens = b_ipo
+        self.nefropatia=nefropatia
+        self.anemia_sideropenica=anemia_sideropenica
 
     def set_diabete(self, b):
         self.diabete = b
@@ -63,6 +65,12 @@ class Utente:
     def set_attivita(self, attivita):
         self.attivita = attivita
 
+    def set_nefropatia(self, nefropatia):
+        self.nefropatia = nefropatia
+
+    def set_anemia_sideropenica(self, anemia_sideropenica):
+        self.anemia_sideropenica = anemia_sideropenica
+
     def get_diabete(self):
         return self.diabete
 
@@ -104,6 +112,12 @@ class Utente:
 
     def get_attivita(self):
         return self.attivita
+
+    def get_nefropatia(self):
+        return self.nefropatia
+
+    def get_anemia_sideropenica(self):
+        return self.anemia_sideropenica
 
     def fabbisogno_calorico(self):
         if self.sesso == "Maschio":
