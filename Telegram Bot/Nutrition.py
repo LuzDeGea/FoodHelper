@@ -10,8 +10,10 @@ def get_valori(food):
             "nf_calories",
             "nf_total_carbohydrate",
             "nf_cholesterol",
+            "nf_iron_dv",
             "nf_total_fat",
             "nf_ingredient_statement",
+            "nf_protein",
             "nf_sodium",
             "nf_sugars"
         ],
