@@ -23,8 +23,8 @@ def inserisci_utente(utente):
 def get_utente(chat_id):
     mycursor.execute("SELECT * FROM utente WHERE chat_id = "+str(chat_id))
     result = mycursor.fetchall()
-    print(result)
-    print(result[0][0])
+    #print(result)
+    #print(result[0][0])
     utente = Utente(result[0][0])
     utente.set_utente(result[0][1],result[0][2],result[0][3],result[0][4],result[0][5],result[0][6],result[0][7],result[0][8],result[0][9],result[0][10],result[0][11])
     return utente
