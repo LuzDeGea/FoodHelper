@@ -1,5 +1,4 @@
 from datetime import datetime, date
-from Food import Food
 import re
 
 fattore_metabolismo = {"Sedentaria" : 1.2, "Leggera" : 1.375, "Moderata" : 1.55, "Attiva" : 1.725, "Molto attiva" : 1.9}
@@ -48,7 +47,6 @@ class Utente:
         self.sesso = sesso
 
     def set_data(self, data_nascita):
-        print(data_nascita)
         try:
             self.data_nascita = datetime.strptime(data_nascita, "%d/%m/%Y")
         except:
@@ -133,19 +131,19 @@ class Utente:
 
     def can_eat(self, cibo):
         feedback = ""
-        if self.get_nefropatia():
+        if self.get_nefropatia() == True:
             risposta = cibo.can_eat_nefropatia(self)
             if risposta == "Sconsigliato":
                 feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppe proteine o sodio"
             if risposta == "Proibito":
                 return "Questo piatto contiene troppe proteine e sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
-        elif self.get_iper_tens():
-            risposta = cibo.can_eat_iperteso(self)
+        elif self.get_iper_tens() == True:
+            risposta = cibo.can_eat_iperteso()
             if risposta == "Sconsigliato":
                 feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppo sodio"
             if risposta == "Proibito":
                 return "Questo piatto contiene troppo sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
-        if self.get_anemia_sideropenica():
+        if self.get_anemia_sideropenica() == True:
             risposta = cibo.can_eat_anemico(self)
             if risposta == "Sconsigliato":
                 feedback = "Puoi mangiare questo piatto ma ti consigliamo di mangiare anche piatti evanti più ferro"
@@ -167,14 +165,10 @@ def controllo_nome(nome):
 def controllo_formato_data(data):
     try:
         n_data = datetime.strptime(data, "%d/%m/%Y")
-        print(date.today().year)
-        print(n_data.year)
         if (date.today().year - n_data.year) > 17:
             return data
-        print("brbrbrbrbrbr")
         return False
     except ValueError:
-        print("exception")
         return False
 
 def controllo_cifre(numero):
