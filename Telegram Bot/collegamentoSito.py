@@ -34,3 +34,8 @@ def get_utente(chat_id):
     utente.set_utente(r.json()["nome"],r.json()["cognome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],r.json()["b_iper"],r.json()["nefropatia"],r.json()["anemia_sideropenica"])
     print(utente)
     return utente
+
+def esiste_utente(chat_id):
+    r = requests.get("http://foodhelper.altervista.org/getUtente.php?chat_id=" + str(chat_id))
+    return not(r.json() is None)
+
