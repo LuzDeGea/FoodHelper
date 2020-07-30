@@ -1,6 +1,7 @@
 from datetime import datetime, date
 import re
 
+semaforo = {"Consigliato" : 1, "Sconsigliato" : 0, "Proibito" : -1}
 fattore_metabolismo = {"Sedentaria" : 1.2, "Leggera" : 1.375, "Moderata" : 1.55, "Attiva" : 1.725, "Molto attiva" : 1.9}
 
 class Utente:
@@ -113,8 +114,8 @@ class Utente:
 
     def __str__(self):
         return "Nome: " + str(self.nome) + "\nCognome: " + str(self.cognome) + "\nSesso: " + str(self.sesso) + \
-                "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "\nPeso: " + str(self.peso) +\
-                "\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " + str(self.fabbisogno_calorico())
+                "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "cm\nPeso: " + str(self.peso) +\
+                "kg\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " + str(self.fabbisogno_calorico())
 
 def controllo_nome(nome):
     regex = re.findall("\D+", nome)
