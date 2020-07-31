@@ -6,7 +6,7 @@ from Dialogflow_Api import rispondimi
 from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
 from Nutrition import get_food, traduzione
-from collegamentoSito import inserisci_utente,get_utente
+from collegamentoSito import inserisci_utente, get_utente, esiste_utente
 
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
@@ -24,12 +24,7 @@ def on_chat_message(msg):
         if content_type == "photo":
             bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
         else:
-            bot.sendMessage(chat_id, str(food))
-            bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
-
-
-    elif content_type == "photo":
-        bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
+            bot.download_file(msg['document']['file_id'], 'Immagini\\Cibo.png')
         food = food_detection()
         if not food:
             bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
