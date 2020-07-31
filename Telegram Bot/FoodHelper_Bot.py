@@ -30,7 +30,12 @@ def on_chat_message(msg):
 
     if content_type == "photo":
         bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
-        bot.sendMessage(chat_id, food_detection())
+        food = food_detection()
+        if not food:
+            bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
+        else:
+            bot.sendMessage(chat_id, str(food))
+            bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
 
     if content_type == "text":
         if msg["text"][0] != '/':
