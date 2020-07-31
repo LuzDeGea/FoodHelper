@@ -10,14 +10,14 @@ file_name = r"Immagini\\Cibo.png"
 ### Cose da scartare ###
 scarti = {"Food","Meal","Cuisine","Dish","Ingredient","Vegetable","Bowl","Person",
           "Finger","Tableware","Brunch","Supper","Appetizer","Recipe","Lunch",
-          "Produce","Finger Food","Staple Food","Whole Food","Local Food",
-          "Food Group","Italian Food","Comfort Food","Vegetarian Food",
-          "Vegan Nutrition","American Food","Platter","À La Carte Food",
+          "Produce","Finger food","Staple food","Whole food","Local food",
+          "Food group","Italian food","Comfort food","Vegetarian food",
+          "Vegan nutrition","American food","Platter","À la carte food",
           "Cooking","Banana family","Al dente","Cruciferous vegetables",
           "Fruit","Breakfast","Dessert","Baked goods","Sweetness",
-          "Frozen Dessert","Mirror","Natural foods","Whole food",
+          "Frozen dessert","Mirror","Natural foods","Whole food",
           "Meat","Fried food","Plant","Local food"}
-tipo_no = {"Superfood","Junk Food","Fast Food"}
+tipo_no = {"Superfood","Junk food","Fast food"}
 
 def food_detection():
     with io.open(file_name, 'rb') as image_file:
