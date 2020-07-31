@@ -5,6 +5,7 @@ from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
 from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
+from Nutrition import exists_food, get_valori, traduzione
 from collegamentoSito import inserisci_utente,get_utente
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
@@ -30,7 +31,15 @@ def on_chat_message(msg):
     if content_type == "text":
         if msg["text"][0] != '/':
             if not(chat_id in acquisizione_dati):
-                bot.sendMessage(chat_id, rispondimi(msg["text"]))
+                if exists_food(msg["text"]) == True:
+                    bot.sendMessage(chat_id,get_valori(msg["text"]))
+                    print("no_T--->"+get_valori(msg["text"]))
+                elif exists_food(traduzione(msg["text"])) == True:
+                    bot.sendMessage(get_valori(chat_id,traduzione(msg["text"])))
+                    print("Trad--->"+traduzione(msg["text"]))
+                else:
+                    bot.sendMessage(chat_id, rispondimi(msg["text"]))
+                    print("no_risp--->"+rispondimi(msg["text"]))
             else:
                 new_user(msg, chat_id)
 
