@@ -17,22 +17,22 @@ class Utente:
         self.attivita=attivita
         #self.diabete = b_diab
         #self.colesterolo = b_cole
-        self.iper_tens = b_iper
+        self.iper_tens = bool(int(b_iper))
         #self.ipo_tens = b_ipo
-        self.nefropatia=nefropatia
-        self.anemia_sideropenica=anemia_sideropenica
+        self.nefropatia = bool(int(nefropatia))
+        self.anemia_sideropenica = bool(int(anemia_sideropenica))
 
     def set_diabete(self, b):
-        self.diabete = b
+        self.diabete = bool(b)
 
     def set_colesterolo(self, b):
-        self.colesterolo = b
+        self.colesterolo = bool(b)
 
     def set_iper_tens(self, b):
-        self.iper_tens = b
+        self.iper_tens = bool(b)
 
     def set_ipo_tens(self, b):
-        self.ipo_tens = b
+        self.ipo_tens = bool(b)
 
     def set_chat_id(self, chat_id):
         self.chat_id = chat_id
@@ -65,10 +65,10 @@ class Utente:
         self.attivita = attivita
 
     def set_nefropatia(self, nefropatia):
-        self.nefropatia = nefropatia
+        self.nefropatia = bool(nefropatia)
 
     def set_anemia_sideropenica(self, anemia_sideropenica):
-        self.anemia_sideropenica = anemia_sideropenica
+        self.anemia_sideropenica = bool(anemia_sideropenica)
 
     def get_diabete(self):
         return self.diabete
@@ -113,10 +113,10 @@ class Utente:
         return self.attivita
 
     def get_nefropatia(self):
-        return self.nefropatia
+        return bool(self.nefropatia)
 
     def get_anemia_sideropenica(self):
-        return self.anemia_sideropenica
+        return bool(self.anemia_sideropenica)
 
     def fabbisogno_calorico(self):
         if self.sesso == "Maschio":
@@ -131,22 +131,25 @@ class Utente:
 
     def can_eat(self, cibo):
         feedback = ""
-        if self.get_nefropatia() == True:
+
+        if self.get_nefropatia():
             risposta = cibo.can_eat_nefropatia(self)
             if risposta == "Sconsigliato":
                 feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppe proteine o sodio"
             if risposta == "Proibito":
                 return "Questo piatto contiene troppe proteine e sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
-        elif self.get_iper_tens() == True:
+
+        elif self.get_iper_tens():
             risposta = cibo.can_eat_iperteso()
             if risposta == "Sconsigliato":
                 feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppo sodio"
             if risposta == "Proibito":
                 return "Questo piatto contiene troppo sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
-        if self.get_anemia_sideropenica() == True:
+
+        if self.get_anemia_sideropenica():
             risposta = cibo.can_eat_anemico(self)
             if risposta == "Sconsigliato":
-                feedback = "Puoi mangiare questo piatto ma ti consigliamo di mangiare anche piatti evanti più ferro"
+                feedback = "Puoi mangiare questo piatto ma ti consigliamo di mangiare anche piatti aventi più ferro"
         if feedback == "":
             return "Puoi mangiare tranquillamente questo cibo!"
         else:
