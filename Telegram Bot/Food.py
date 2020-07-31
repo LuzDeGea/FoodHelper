@@ -2,8 +2,8 @@ from Utente import Utente
 
 IPERTESO : float = 1940
 NEFRO: float = 0.7
-ANEMICO_MASCHIO: float = 0.10
-ANEMICO_FEMMINA: float = 0.15
+ANEMICO_MASCHIO: int = 30 #valori percentuali
+ANEMICO_FEMMINA: int = 40 #valori percentuali
 
 class Food:
     def __init__(self, food_name, nutri):
@@ -111,13 +111,14 @@ class Food:
     '''
     Considero il livello di ferro da assumere in base al sesso del utente
     e se l'utente è o meno in menopausa.
+    Moltiplico per 3.33 perchè ferro è un valore percentuale.
     '''
     def can_eat_anemico(self, utente):
         if utente.get_sesso() == "Femmina" and utente.get_eta() < 50:
             ferro_consigliato = ANEMICO_FEMMINA
         else:
             ferro_consigliato = ANEMICO_MASCHIO
-        if self.ferro < ferro_consigliato/3:
+        if self.ferro < ferro_consigliato:
             return "Sconsigliato"
             #"Puoi mangiarlo, ma ti consiglio di assumero alimenti con più ferro!"
         else:
