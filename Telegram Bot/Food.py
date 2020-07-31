@@ -81,13 +81,15 @@ class Food:
     
     '''
     def can_eat_iperteso(self):
-        if self.sodio < IPERTESO/4:
-            return "Consigliato"
-        elif self.sodio < IPERTESO/3:
-            return "Sconsigliato"
+        if not(self.sodio is None):
+            if self.sodio < IPERTESO/4:
+                return "Consigliato"
+            elif self.sodio < IPERTESO/3:
+                return "Sconsigliato"
+            else:
+                return "Proibito"
         else:
-            return "Proibito"
-
+            return "No_info"
 
     '''
     Per i nefropatici devo considerare il livello di proteine e di sodio.
@@ -97,15 +99,18 @@ class Food:
     agisco in base al livello di sodio.
     '''
     def can_eat_nefropatia(self, utente):
-        if self.proteine < (utente.peso * 0.7)/4:
-            return utente.can_eat_iperteso()
-        elif self.proteine < (utente.peso * 0.7)/3:
-            if utente.can_eat_iperteso() == "Consigliato":
-                return "Sconsigliato"
+        if not(self.proteine is None):
+            if self.proteine < (utente.peso * 0.7)/4:
+                return utente.can_eat_iperteso()
+            elif self.proteine < (utente.peso * 0.7)/3:
+                if utente.can_eat_iperteso() == "Consigliato":
+                    return "Sconsigliato"
+                else:
+                    return "Proibito"
             else:
                 return "Proibito"
         else:
-            return "Proibito"
+            return "No_info"
 
 
     '''
