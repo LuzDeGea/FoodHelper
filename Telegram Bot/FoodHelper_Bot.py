@@ -5,8 +5,9 @@ from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
 from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
-from Nutrition import exists_food, get_valori, traduzione
-from collegamentoSito import inserisci_utente, get_utente, esiste_utente
+from Nutrition import get_food, traduzione
+from collegamentoSito import inserisci_utente,get_utente
+
 
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
@@ -23,7 +24,12 @@ def on_chat_message(msg):
         if content_type == "photo":
             bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
         else:
-            bot.download_file(msg['document']['file_id'], 'Immagini\\Cibo.png')
+            bot.sendMessage(chat_id, str(food))
+            bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
+
+
+    elif content_type == "photo":
+        bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
         food = food_detection()
         if not food:
             bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
@@ -32,20 +38,27 @@ def on_chat_message(msg):
             if esiste_utente(chat_id):
                 bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
 
-    if content_type == "text":
+    elif content_type == "text":
         if msg["text"][0] != '/':
             if not(chat_id in acquisizione_dati):
-                if exists_food(msg["text"]) == True:
-                    bot.sendMessage(chat_id,get_valori(msg["text"]))
-                    print("no_T--->"+get_valori(msg["text"]))
-                elif exists_food(traduzione(msg["text"])) == True:
-                    bot.sendMessage(get_valori(chat_id,traduzione(msg["text"])))
-                    print("Trad--->"+traduzione(msg["text"]))
+                food = get_food(msg["text"])
+                if not food:
+                    trad=traduzione(msg["text"])
+                    food_t = get_food(trad)
+                    if not food_t:
+                        print("no_risp(dial_flow)--->")
+                        bot.sendMessage(chat_id, rispondimi(msg["text"]))
+                    else:
+                        print("R_Trad--->")
+                        bot.sendMessage(chat_id, str(food_t))
+                        bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food_t))
                 else:
-                    bot.sendMessage(chat_id, rispondimi(msg["text"]))
-                    print("no_risp--->"+rispondimi(msg["text"]))
+                    print("Risp--->")
+                    bot.sendMessage(chat_id, str(food))
+                    bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
             else:
                 new_user(msg, chat_id)
+
 
         elif msg["text"].lower() == "/info":
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
@@ -77,6 +90,9 @@ def on_chat_message(msg):
 
         else:
             bot.sendMessage(chat_id, "Spiacente, non riconosco questo comando.\nPer la lista dei comandi digitare il comando /help.")
+
+    else:
+        bot.sendMessage(chat_id,"Questo formato non è supportato.")
 
 def new_user(msg, chat_id):
     if acquisizione_dati[chat_id] == stato_conversazione["Nome"]:
