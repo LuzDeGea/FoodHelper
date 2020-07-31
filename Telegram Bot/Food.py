@@ -8,6 +8,7 @@ ANEMICO_FEMMINA: float = 0.15
 class Food:
     def __init__(self, food_name, nutri):
         self.nome = food_name
+        self.item_name = nutri["item_name"] ##test##
         self.calorie = nutri["nf_calories"]
         self.carboidrati = nutri["nf_total_carbohydrate"]
         self.colesterolo = nutri["nf_cholesterol"]
@@ -17,6 +18,13 @@ class Food:
         self.proteine = nutri["nf_protein"]
         self.sodio = nutri["nf_sodium"]
         self.zuccheri = nutri["nf_sugars"]
+
+    '''
+    Restituisce l item_name del cibo sotto forma di stringa
+    '''
+    def get_item_name(self):
+        return self.item_name
+
 
     '''
     Restituisce il nome del cibo sotto forma di stringa
@@ -126,6 +134,7 @@ class Food:
             + "Proteine: " + str(self.proteine) + " g\n" \
             + "Ingredienti: " + str(self.ingredienti) + " g\n" \
             + "Sodio: " + str(self.sodio) + " mg\n" \
-            + "Zuccheri: " + str(self.zuccheri) + "g"
+            + "Zuccheri: " + str(self.zuccheri) + "g\n" \
+            + "Item_name:" + str(self.item_name)+""  ##test##
         return food
 
