@@ -8,6 +8,7 @@ import time
 from Nutrition import get_food, traduzione
 from collegamentoSito import inserisci_utente,get_utente
 
+
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
 
 bot = telepot.Bot(TOKEN)
@@ -19,11 +20,9 @@ acquisizione_dati = {}
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
 
-    if content_type == "document":
-        bot.download_file(msg['document']['file_id'], 'Immagini\\Cibo.png')
-        food = food_detection()
-        if not food:
-            bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
+    if content_type == "document" or content_type == "photo":
+        if content_type == "photo":
+            bot.download_file(msg['photo'][0]['file_id'], 'Immagini\\Cibo.png')
         else:
             bot.sendMessage(chat_id, str(food))
             bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
@@ -36,7 +35,8 @@ def on_chat_message(msg):
             bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
         else:
             bot.sendMessage(chat_id, str(food))
-            bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
+            if esiste_utente(chat_id):
+                bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
 
     elif content_type == "text":
         if msg["text"][0] != '/':
