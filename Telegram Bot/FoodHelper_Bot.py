@@ -43,7 +43,8 @@ def on_chat_message(msg):
             if not(chat_id in acquisizione_dati):
                 food = get_food(msg["text"])
                 if not food:
-                    food_t = get_food(traduzione(msg["text"]))
+                    trad=traduzione(msg["text"])
+                    food_t = get_food(trad)
                     if not food_t:
                         print("no_risp(dial_flow)--->")
                         bot.sendMessage(chat_id, rispondimi(msg["text"]))

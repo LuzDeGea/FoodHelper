@@ -101,10 +101,12 @@ class Food:
     def can_eat_nefropatia(self, utente):
         if not(self.proteine is None):
             if self.proteine < (utente.peso * 0.7)/4:
-                return utente.can_eat_iperteso()
+                return self.can_eat_iperteso()
             elif self.proteine < (utente.peso * 0.7)/3:
-                if utente.can_eat_iperteso() == "Consigliato":
+                if self.can_eat_iperteso() == "Consigliato":
                     return "Sconsigliato"
+                elif self.can_eat_iperteso() == "No_info":
+                    return "No_info"
                 else:
                     return "Proibito"
             else:

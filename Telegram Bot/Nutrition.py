@@ -4,7 +4,7 @@ from Food import Food
 def traduzione(msg):
     url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
 
-    payload = "source=it&q=Hello%2C%20world!&target=en"
+    payload = "source=it&q="+msg+"&target=en"
     headers = {
         'x-rapidapi-host': "google-translate1.p.rapidapi.com",
         'x-rapidapi-key': "0e02a9f55dmsh53204c2910d6aeap14f2c6jsn2cac795c2119",
@@ -12,7 +12,8 @@ def traduzione(msg):
         'content-type': "application/x-www-form-urlencoded"
     }
 
-    response = requests.request("POST", url, data=msg, headers=headers)
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print("Traduzione: "+response.json()["data"]["translations"][0]["translatedText"])
     return response.text
 
 def get_food(food):
@@ -37,7 +38,10 @@ def get_food(food):
     }
     #Richiesta HTTP POST
     r = requests.post("https://api.nutritionix.com/v1_1/search", data = pload)
-    if r.json()["total"] == 0:
+    print(r.json())
+    if "error_message" in r.json().keys():
+        return False
+    elif r.json()["total"] == 0:
         return False
     else:
         return Food(food, r.json()["hits"][0]["fields"])

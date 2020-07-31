@@ -135,21 +135,25 @@ class Utente:
         if self.get_nefropatia():
             risposta = cibo.can_eat_nefropatia(self)
             if risposta == "Sconsigliato":
-                feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppe proteine o sodio"
-            if risposta == "Proibito":
+                feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppe proteine o sodio."
+            elif risposta == "Proibito":
                 return "Questo piatto contiene troppe proteine e sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
-
+            elif risposta == "No_info":
+                return "Non ho abbastanza informazioni su questa pietanza."
         elif self.get_iper_tens():
             risposta = cibo.can_eat_iperteso()
             if risposta == "Sconsigliato":
-                feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppo sodio"
-            if risposta == "Proibito":
+                feedback = "Puoi mangiare questo piatto ma ti sconsigliamo di mangiare altri piatti contenente troppo sodio."
+            elif risposta == "Proibito":
                 return "Questo piatto contiene troppo sodio per il tuo metabolismo, ti consigliamo di non mangiarlo."
-
+            elif risposta == "No_info":
+                return "Non ho abbastanza informazioni su questa pietanza."
         if self.get_anemia_sideropenica():
             risposta = cibo.can_eat_anemico(self)
             if risposta == "Sconsigliato":
-                feedback = "Puoi mangiare questo piatto ma ti consigliamo di mangiare anche piatti aventi più ferro"
+                feedback = "Puoi mangiare questo piatto ma ti consigliamo di mangiare anche piatti aventi più ferro."
+            elif risposta == "No_info":
+                return "Non ho abbastanza informazioni su questa pietanza."
         if feedback == "":
             return "Puoi mangiare tranquillamente questo cibo!"
         else:
