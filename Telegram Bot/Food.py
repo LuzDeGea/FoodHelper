@@ -117,14 +117,15 @@ class Food:
 
 
     def __str__(self):
-        food = "Calorie: " + str(self.calorie) + " kcal\n" \
+        food = "Il cibo riconosciuto è: " + str(self.nome) + "\n" \
+            + "Calorie: " + str(self.calorie) + " kcal\n" \
             + "Carboidrati: " + str(self.carboidrati) + " g\n" \
             + "Colesterolo: " + str(self.colesterolo) + " mg\n" \
+            + "Ferro: " + str(self.ferro) + " %\n" \
             + "Grassi: " + str(self.grassi) + " g\n" \
+            + "Proteine: " + str(self.proteine) + " g\n" \
             + "Ingredienti: " + str(self.ingredienti) + " g\n" \
             + "Sodio: " + str(self.sodio) + " mg\n" \
             + "Zuccheri: " + str(self.zuccheri) + "g"
         return food
-
-
 

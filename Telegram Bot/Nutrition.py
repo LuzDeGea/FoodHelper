@@ -1,7 +1,7 @@
 import requests
 from Food import Food
 
-def get_valori(food):
+def get_food(food):
     #File jason da inviare in POST
     pload = {
         "appId": "042872e7",
@@ -22,6 +22,6 @@ def get_valori(food):
     #Richiesta HTTP POST
     r = requests.post("https://api.nutritionix.com/v1_1/search", data = pload)
     if r.json()["total"] == 0:
-        return "Non ho trovato informazioni relative a questo cibo."
+        return False
     else:
-        return str(Food(food, r.json()["hits"][0]["fields"]))
+        return Food(food, r.json()["hits"][0]["fields"])

@@ -6,8 +6,6 @@ mydb = mysql.connector.connect(
   password="password"
 )
 
-print(mydb)
-
 mycursor = mydb.cursor()
 mycursor.execute("DROP DATABASE IF EXISTS foodhelper")
 mycursor.execute("CREATE DATABASE foodhelper")

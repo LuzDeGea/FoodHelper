@@ -1,4 +1,5 @@
 import requests
+from pprint import pprint
 from Utente import Utente
 #r = requests.get("http://foodhelper.altervista.org/InserisciUtente.php?chat_id='123654789'&nome='pino'&cognome='asd'&sesso='Maschio'&data_nascita='1998/10/10'&altezza='183'&peso='83'&attivita='leggera'&b_diab='0'&b_cole='0'&b_iper='0'&b_ipo='0'")
 #r=requests.get("http://foodhelper.altervista.org/getUtente.php?chat_id=381741872")
@@ -18,21 +19,14 @@ def inserisci_utente(utente):
     "'&b_iper='"+str(int(utente.get_iper_tens()))+ \
     "'&nefropatia='" + str(int(utente.get_nefropatia())) + \
     "'&anemia_sideropenica='"+str(int(utente.get_anemia_sideropenica()))+"'"
+    requests.get(richiesta)
 
-    print(richiesta)
-    r=requests.get(richiesta)
-
-    print(r)
 def get_utente(chat_id):
-    print("http://foodhelper.altervista.org/getUtente.php?chat_id="+str(chat_id))
+    #print("http://foodhelper.altervista.org/getUtente.php?chat_id="+str(chat_id))
     r = requests.get("http://foodhelper.altervista.org/getUtente.php?chat_id="+str(chat_id))
-    print(r)
-    print(type(r))
-    utente =Utente(chat_id)
-    print(r.json())
-    print(r.json()["chat_id"])
-    utente.set_utente(r.json()["nome"],r.json()["cognome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],r.json()["b_iper"],r.json()["nefropatia"],r.json()["anemia_sideropenica"])
-    print(utente)
+    pprint(r.json())
+    utente = Utente(chat_id)
+    utente.set_utente(r.json()["nome"],r.json()["cognome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],int(r.json()["b_iper"]),int(r.json()["nefropatia"]),int(r.json()["anemia_sideropenica"]))
     return utente
 
 def esiste_utente(chat_id):
