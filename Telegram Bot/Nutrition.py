@@ -12,9 +12,11 @@ def traduzione(msg):
         'content-type': "application/x-www-form-urlencoded"
     }
 
-    response = requests.request("POST", url, data=payload, headers=headers)
-    print("Traduzione: "+response.json()["data"]["translations"][0]["translatedText"])
-    return response.text
+    #response = requests.request("POST", url, data=payload, headers=headers)
+    #pprint(response.json())
+    #print("Traduzione: "+response.json()["data"]["translations"][0]["translatedText"])
+    #return response.text
+    return msg
 
 def get_food(food):
     #File jason da inviare in POST
@@ -32,16 +34,19 @@ def get_food(food):
             "nf_ingredient_statement",
             "nf_protein",
             "nf_sodium",
-            "nf_sugars"
+            "nf_sugars",
+            "brand_name"
         ],
-        "query": food
+        "query": food,
     }
     #Richiesta HTTP POST
-    r = requests.post("https://api.nutritionix.com/v1_1/search", data = pload)
-    print(r.json())
+    r = requests.post("https://api.nutritionix.com/v1_1/search", data=pload)
     if "error_message" in r.json().keys():
         return False
     elif r.json()["total"] == 0:
         return False
+    prima_risposta = r.json()["hits"][0]["fields"]
+    if prima_risposta["brand_name"] != "USDA" and prima_risposta["brand_name"] != "Nutritionix":
+        return False
     else:
-        return Food(food, r.json()["hits"][0]["fields"])
+        return Food(food, prima_risposta)
