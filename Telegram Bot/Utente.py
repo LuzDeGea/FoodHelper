@@ -196,7 +196,7 @@ def controllo_altezza(altezza):
 
 def controllo_peso(peso):
     w = controllo_cifre(peso)
-    if 45 < w < 130:
+    if 40 < w < 150:
         return w
     else:
         return False
