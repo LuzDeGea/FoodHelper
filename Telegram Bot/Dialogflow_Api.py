@@ -1,10 +1,10 @@
-"""Install the following requirements:
-    dialogflow        0.5.1
-    google-api-core   1.4.1
-"""
 import os
 import dialogflow
 from google.api_core.exceptions import InvalidArgument
+from collegamentoSito import inserisci_utente
+import re
+from pprint import pprint
+
 DIALOGFLOW_PROJECT_ID = 'newagent-qwujpw'
 DIALOGFLOW_LANGUAGE_CODE = 'en'
 GOOGLE_APPLICATION_CREDENTIALS = r'API_key\\Dialogflow_key.json'
@@ -24,8 +24,10 @@ def rispondimi(testo):
     #print("Detected intent:", response.query_result.intent.display_name)
     #print("Detected intent confidence:", response.query_result.intent_detection_confidence)
     #print("Fulfillment text:", response.query_result.fulfillment_text)
+    return response.query_result
 
-    if response.query_result.fulfillment_text == "":
-        return "Al momento non sono in grado di risponderti"
-    else:
-        return str(response.query_result.fulfillment_text)
+    #intent = response.query_result.intent.display_name
+    #if response.query_result.fulfillment_text == "":
+        #return "Al momento non sono in grado di risponderti"
+    #else:
+        #return str(response.query_result.fulfillment_text)
