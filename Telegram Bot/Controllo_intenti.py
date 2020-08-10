@@ -1,10 +1,13 @@
 from Dialogflow_Api import rispondimi
 from collegamentoSito import inserisci_utente
+from Nutrition import get_food
 import re
 
 def controllo_intent(query_result, utente):
     intent = query_result.intent.display_name
     text = query_result.fulfillment_text
+    if intent == "Cibo":
+        return rilevazione_cibo(utente, query_result)
     if utente:
         if intent == "Saluto":
             return text + " " + utente.get_nome()
@@ -129,3 +132,21 @@ def modifica_attività(utente, result):
         utente.set_attivita(attivita)
         inserisci_utente(utente)
         return result.fulfillment_text
+
+def rilevazione_cibo(utente, result):
+    try:
+        cibo = list(result.parameters.fields["Cibo"].struct_value.fields.values())[0].string_value
+        #print(list((result.parameters.fields["Cibo"].struct_value.fields.keys()))[0])  STAMPA LA CATEGORIA
+    except IndexError:
+        cibo = result.parameters.fields["Cibo"].string_value
+
+    if cibo == "":
+        return "Spiacente, non abbiamo informazione relative a questo cibo."
+
+    food = get_food(cibo)
+    if not food:
+        return "Il cibo non è stato riconosciuto correttamente."
+    elif utente:
+        return str(food) + "\n\n" + utente.can_eat(food)
+    else:
+        return str(food)
