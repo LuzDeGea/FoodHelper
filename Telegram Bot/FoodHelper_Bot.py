@@ -3,6 +3,7 @@ from telepot.loop import MessageLoop
 from telepot.namedtuple import InlineKeyboardButton, InlineKeyboardMarkup
 from Food_detection import food_detection
 from Dialogflow_Api import rispondimi
+from Controllo_intenti import controllo_intent
 from Utente import Utente, controllo_nome, controllo_formato_data, controllo_altezza, controllo_peso
 import time
 from Nutrition import get_food, traduzione
@@ -36,21 +37,7 @@ def on_chat_message(msg):
     elif content_type == "text":
         if msg["text"][0] != '/':
             if not(chat_id in acquisizione_dati):
-                food = get_food(msg["text"])
-                if not food:
-                    trad = traduzione(msg["text"])
-                    food_t = get_food(trad)
-                    if not food_t:
-                        print("no_risp(dial_flow)--->")
-                        bot.sendMessage(chat_id, rispondimi(msg["text"]))
-                    else:
-                        print("R_Trad--->")
-                        bot.sendMessage(chat_id, str(food_t))
-                        bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food_t))
-                else:
-                    print("Risp--->")
-                    bot.sendMessage(chat_id, str(food))
-                    bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
+                bot.sendMessage(chat_id, controllo_intent(rispondimi(msg["text"]), get_utente(chat_id)))
             else:
                 new_user(msg, chat_id)
 

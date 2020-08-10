@@ -1,14 +1,15 @@
 from Utente import Utente
 
-IPERTESO : float = 1940
+IPERTESO: float = 1940
 NEFRO: float = 0.7
-ANEMICO_MASCHIO: int = 15 #valori percentuali
-ANEMICO_FEMMINA: int = 20 #valori percentuali
+ANEMICO_MASCHIO: int = 15  # valori percentuali
+ANEMICO_FEMMINA: int = 20  # valori percentuali
+
 
 class Food:
     def __init__(self, food_name, nutri):
         self.nome = food_name
-        self.item_name = nutri["item_name"] ##test##
+        self.item_name = nutri["item_name"]  ##test##
         self.calorie = nutri["nf_calories"]
         self.carboidrati = nutri["nf_total_carbohydrate"]
         self.colesterolo = nutri["nf_cholesterol"]
@@ -22,55 +23,63 @@ class Food:
     '''
     Restituisce l item_name del cibo sotto forma di stringa
     '''
+
     def get_item_name(self):
         return self.item_name
-
 
     '''
     Restituisce il nome del cibo sotto forma di stringa
     '''
+
     def get_nome(self):
         return self.nome
 
     '''
     Restituisce le kcal sotto forma di float
     '''
+
     def get_calorie(self):
         return self.calorie
 
     '''
     Restituisce il totale dei carboidrati in g sotto forma di float
     '''
+
     def get_carboidrati(self):
         return self.carboidrati
 
     '''
     Restituisce la quantita di colesterolo in mg sotto forma di float
     '''
+
     def get_colesterolo(self):
         return self.colesterolo
 
     '''
     Restituisce i grassi totali in g sotto forma di float
     '''
+
     def get_grassi(self):
         return self.grassi
 
     '''
     Restituisce la lista degli ingredienti sotto forma di stringa
     '''
+
     def get_ingredienti(self):
         return self.ingredienti
 
     '''
     Restituisce il sodio in mg sotto forma di float
     '''
+
     def get_sodio(self):
         return self.sodio
 
     '''
     Restituisce gli zuccheri in g sotto forma di float
     '''
+
     def get_zuccheri(self):
         return self.zuccheri
 
@@ -80,11 +89,12 @@ class Food:
     perchè un iperteso non può assumere più di 5g di sale al giorno
     
     '''
+
     def can_eat_iperteso(self):
-        if not(self.sodio is None):
-            if self.sodio < IPERTESO/4:
+        if not (self.sodio is None):
+            if self.sodio < IPERTESO / 4:
                 return "Consigliato"
-            elif self.sodio < IPERTESO/3:
+            elif self.sodio < IPERTESO / 3:
                 return "Sconsigliato"
             else:
                 return "Proibito"
@@ -98,11 +108,12 @@ class Food:
     Altrimenti se il livello di proteine non è estramemente consigliabile 
     agisco in base al livello di sodio.
     '''
+
     def can_eat_nefropatia(self, utente):
-        if not(self.proteine is None):
-            if self.proteine < (utente.peso * 0.7)/4:
+        if not (self.proteine is None):
+            if self.proteine < (utente.peso * 0.7) / 4:
                 return self.can_eat_iperteso()
-            elif self.proteine < (utente.peso * 0.7)/3:
+            elif self.proteine < (utente.peso * 0.7) / 3:
                 if self.can_eat_iperteso() == "Consigliato":
                     return "Sconsigliato"
                 elif self.can_eat_iperteso() == "No_info":
@@ -114,11 +125,11 @@ class Food:
         else:
             return "No_info"
 
-
     '''
     Considero il livello di ferro da assumere in base al sesso del utente
     e se l'utente è o meno in menopausa.
     '''
+
     def can_eat_anemico(self, utente):
         if utente.get_sesso() == "Femmina" and utente.get_eta() < 50:
             ferro_consigliato = ANEMICO_FEMMINA
@@ -126,22 +137,30 @@ class Food:
             ferro_consigliato = ANEMICO_MASCHIO
         if self.ferro < ferro_consigliato:
             return "Sconsigliato"
-            #"Puoi mangiarlo, ma ti consiglio di assumero alimenti con più ferro!"
+            # "Puoi mangiarlo, ma ti consiglio di assumero alimenti con più ferro!"
         else:
             return "Consigliato"
 
-
     def __str__(self):
-        food = "Il cibo riconosciuto è: " + str(self.nome) + "\n" \
-            + "Calorie: " + str(self.calorie) + " kcal\n" \
-            + "Carboidrati: " + str(self.carboidrati) + " g\n" \
-            + "Colesterolo: " + str(self.colesterolo) + " mg\n" \
-            + "Ferro: " + str(self.ferro) + " %\n" \
-            + "Grassi: " + str(self.grassi) + " g\n" \
-            + "Proteine: " + str(self.proteine) + " g\n" \
-            + "Ingredienti: " + str(self.ingredienti) + " g\n" \
-            + "Sodio: " + str(self.sodio) + " mg\n" \
-            + "Zuccheri: " + str(self.zuccheri) + "g\n" \
-            + "Item_name:" + str(self.item_name)+""  ##test##
+        food = "Il cibo riconosciuto è: " + str(self.nome) + "\n"
+        if self.calorie is not None:
+            food += "Calorie: " + str(self.calorie) + " kcal\n"
+        if self.carboidrati is not None:
+            food += "Carboidrati: " + str(self.carboidrati) + " g\n"
+        if self.colesterolo is not None:
+            food += "Colesterolo: " + str(self.colesterolo) + " mg\n"
+        if self.ferro is not None:
+            food += "Ferro: " + str(self.ferro) + " %\n"
+        if self.grassi is not None:
+            food += "Grassi: " + str(self.grassi) + " g\n"
+        if self.proteine is not None:
+            food += "Proteine: " + str(self.proteine) + " g\n"
+        if self.ingredienti is not None:
+            food += "Ingredienti: " + str(self.ingredienti) + " g\n"
+        if self.sodio is not None:
+            food += "Sodio: " + str(self.sodio) + " mg\n"
+        if self.zuccheri is not None:
+            food += "Zuccheri: " + str(self.zuccheri) + "g\n"
+        if self.item_name is not None:
+            food += "Item_name:" + str(self.item_name) + ""  ##test##
         return food
-
