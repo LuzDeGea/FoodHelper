@@ -1,6 +1,6 @@
 from Dialogflow_Api import rispondimi
 from collegamentoSito import inserisci_utente
-from Nutrition import get_food
+from Nutrition import get_food, traduzione
 import re
 
 def controllo_intent(query_result, utente):
@@ -145,8 +145,10 @@ def rilevazione_cibo(utente, result):
 
     food = get_food(cibo)
     if not food:
-        return "Il cibo non è stato riconosciuto correttamente."
-    elif utente:
-        return str(food) + "\n\n" + utente.can_eat(food)
+        food = get_food(traduzione(cibo))
+        if not food:
+            return "Il cibo non è stato riconosciuto correttamente."
+    if utente:
+            return str(food) + "\n\n" + utente.can_eat(food)
     else:
         return str(food)
