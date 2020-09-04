@@ -1,10 +1,10 @@
 import requests
 from Utente import Utente
-#r = requests.get("http://foodhelper.altervista.org/InserisciUtente.php?chat_id='123654789'&nome='pino'&cognome='asd'&sesso='Maschio'&data_nascita='1998/10/10'&altezza='183'&peso='83'&attivita='leggera'&b_diab='0'&b_cole='0'&b_iper='0'&b_ipo='0'")
-#r=requests.get("http://foodhelper.altervista.org/getUtente.php?chat_id=381741872")
-#print(r.json())
-#print(r.json()["chat_id"])
 
+"""
+inserisci_utente(oggetto_utente)
+inserisce un utente nel database sovrascrivendo se già presente
+"""
 def inserisci_utente(utente):
     richiesta="http://foodhelper.altervista.org/InserisciUtente.php?"+\
     "chat_id='"+str(utente.get_chat_id())+\
@@ -20,8 +20,11 @@ def inserisci_utente(utente):
     "'&anemia_sideropenica='"+str(int(utente.get_anemia_sideropenica()))+"'"
     requests.get(richiesta)
 
+"""
+get_utente(chat_id)-->Utente
+restituisce l'utente con identificativo chat_id prendendolo dal database
+"""
 def get_utente(chat_id):
-    #print("http://foodhelper.altervista.org/getUtente.php?chat_id="+str(chat_id))
     r = requests.get("http://foodhelper.altervista.org/getUtente.php?chat_id="+str(chat_id))
     if r.json() is None:
         return None
@@ -29,6 +32,10 @@ def get_utente(chat_id):
     utente.set_utente(r.json()["nome"],r.json()["cognome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],int(r.json()["b_iper"]),int(r.json()["nefropatia"]),int(r.json()["anemia_sideropenica"]))
     return utente
 
+"""
+esiste_utente(chat_id)-->bool
+restituisce true se l'utente con identificativo chat_id è presente nel database false altrimenti
+"""
 def esiste_utente(chat_id):
     r = requests.get("http://foodhelper.altervista.org/getUtente.php?chat_id=" + str(chat_id))
     return not(r.json() is None)

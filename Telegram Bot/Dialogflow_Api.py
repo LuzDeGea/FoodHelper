@@ -12,6 +12,11 @@ SESSION_ID = 'current-user-id'
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'API_key\\Dialogflow_key.json'
 session_client = dialogflow.SessionsClient()
+
+"""
+rispondimi(testo)-->string
+usa le api di dialogflow per rispondeer al testo
+"""
 def rispondimi(testo):
     session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
     text_input = dialogflow.types.TextInput(text=testo, language_code=DIALOGFLOW_LANGUAGE_CODE)
@@ -20,14 +25,5 @@ def rispondimi(testo):
         response = session_client.detect_intent(session=session, query_input=query_input)
     except InvalidArgument:
         raise
-    #print("Query text:", response.query_result.query_text)
-    #print("Detected intent:", response.query_result.intent.display_name)
-    #print("Detected intent confidence:", response.query_result.intent_detection_confidence)
-    #print("Fulfillment text:", response.query_result.fulfillment_text)
     return response.query_result
 
-    #intent = response.query_result.intent.display_name
-    #if response.query_result.fulfillment_text == "":
-        #return "Al momento non sono in grado di risponderti"
-    #else:
-        #return str(response.query_result.fulfillment_text)
