@@ -1,9 +1,6 @@
 import os
 import dialogflow
 from google.api_core.exceptions import InvalidArgument
-from collegamentoSito import inserisci_utente
-import re
-from pprint import pprint
 
 DIALOGFLOW_PROJECT_ID = 'newagent-qwujpw'
 DIALOGFLOW_LANGUAGE_CODE = 'en'
