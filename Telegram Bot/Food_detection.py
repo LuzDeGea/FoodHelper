@@ -2,14 +2,15 @@ import io, os
 from google.cloud import vision
 from Nutrition import get_food
 import csv
+import re
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"API_key\\Vision_key.json"
 client = vision.ImageAnnotatorClient()
 
 file_name = r"Immagini\\Cibo.png"
 
-### Cose da scartare ###
-tipo_no = {"Superfood","Junk food","Fast food"}
+### Cose da scartare come sottostringa###
+no_food = ["Food","Framily","Group","Superfood","Junk","Fast"]
 
 filtro=[]
 filter_name = "filtro_s.csv"
@@ -41,8 +42,14 @@ def ConteinsLabel(response, in_lable):
 def filtering(response):
     if ConteinsLabel(response,"Food") or ConteinsLabel(response,"Plant"):
         for food in response.label_annotations:
-            if not(food.description in filtro):
+            if not((food.description in filtro) and (contiene(food.description))):
                 return food.description
         return False
     else:
         return False
+
+def contiene(Etichetta):
+    for food in no_food:
+        if re.search(food.lower(),Etichetta.lower()):
+            return False
+    return True
