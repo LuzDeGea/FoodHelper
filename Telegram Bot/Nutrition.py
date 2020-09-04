@@ -1,5 +1,6 @@
 import requests
 from Food import Food
+from pprint import pprint
 
 def traduzione(msg):
     url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
@@ -12,11 +13,11 @@ def traduzione(msg):
         'content-type': "application/x-www-form-urlencoded"
     }
 
-    #response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, data=payload, headers=headers)
     #pprint(response.json())
     #print("Traduzione: "+response.json()["data"]["translations"][0]["translatedText"])
-    #return response.text
-    return msg
+    return response.json()["data"]["translations"][0]["translatedText"]
+    #return msg
 
 def get_food(food):
     #File jason da inviare in POST
