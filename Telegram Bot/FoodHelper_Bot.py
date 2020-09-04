@@ -10,14 +10,29 @@ from Nutrition import get_food, traduzione
 from collegamentoSito import inserisci_utente, get_utente, esiste_utente
 
 
+#Token di collegamento per il bot telegram
 TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
-
+#Collegamento al bot tramite token
 bot = telepot.Bot(TOKEN)
 
+"""
+Stato conversazione serve a conservare a che punto della registrazione utente 
+ci si è fermati per avere un punto di ripresa al ritorno sul bot.
+"""
 stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6,"Diabete" : 7, "Colesterolo" : 8,"Iper_tens" : 9, "Ipo_tens" : 10,"Nefropatia" : 11,"Anemia_sideropenica" : 12}
 utenti = {}
 acquisizione_dati = {}
 
+"""
+on_chat_message(msg)--> respose
+La funzione prende il messaggio dell'utente e come prima cosa identifica il content_type,
+in caso il tipo risulti come documento, immagine oppure come stringa (contenete nome di cibo), 
+si rimanda alla funzione di risposta per cibo.
+Se il tipo corrisponde a testo (e inizia con "/")corrisponderà ad un comando, e si passa
+alla sotto-gestione dei comandi.
+Se il tipo corrisponde a testo (non cibo, e non comando) ci si rimanda alle risposte 
+gestite ed elaborate da DialogFlow. 
+"""
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
 
@@ -76,6 +91,12 @@ def on_chat_message(msg):
     else:
         bot.sendMessage(chat_id,"Questo formato non è supportato.")
 
+"""
+new_user(msg, chat_id)-->user
+Gestisce la registrazione per l'utente, riferendosi allo stato di avanzamento corrente, rifacenddosi a 
+stato_conversazione, e modificando i dati inviati dall'utente.
+lo stato di avanzamento viene aggiornato solo dopo la fine dello stato attuale.
+"""
 def new_user(msg, chat_id):
     if acquisizione_dati[chat_id] == stato_conversazione["Nome"]:
         nome = controllo_nome(msg["text"])
@@ -210,10 +231,21 @@ def new_user(msg, chat_id):
             acquisizione_dati.pop(chat_id)
             inserisci_utente(utenti.pop(chat_id))
 
-
+"""
+show_user(chat_id)-->Text
+Mostra le informazioni dell'utente leggendole dal DataBase, se l'utente
+non è registrato, restituisce un messaggio di richiesta di registrazione.
+"""
 def show_user(chat_id):
-    bot.sendMessage(chat_id, "Your personal info:\n\n" + str(get_utente(chat_id)))
+    info = get_utente(chat_id)==None
+    if info:
+        bot.sendMessage(chat_id, "Your personal info:\n\n" + str(info))
+    else:
+        bot.sendMessage(chat_id, "Non sei ancora registrato, usa /new per registrarti \n")
 
+"""
+Gestisce l'evento alla pressione dei pulsanti o all'uso dei comandi.
+"""
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor="callback_query")
     if query_data == "info":
