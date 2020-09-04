@@ -1,7 +1,13 @@
 import requests
 from Food import Food
-from pprint import pprint
 
+'''
+traduzione(stringa) --> stringa
+Questa funziona prende in input una stringa in lingua italiana e
+restitusce in input la stessa stringa ma tradotta in lingua inglese.
+Tramite API google translate inviamo una richieste da traduzione 
+e otterremo il risultato corrispondente. 
+'''
 def traduzione(msg):
     url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
 
@@ -14,11 +20,17 @@ def traduzione(msg):
     }
 
     response = requests.request("POST", url, data=payload, headers=headers)
-    #pprint(response.json())
-    #print("Traduzione: "+response.json()["data"]["translations"][0]["translatedText"])
     return response.json()["data"]["translations"][0]["translatedText"]
-    #return msg
 
+'''
+get_food(stringa) --> Food | get_food(stringa) --> bool
+La funzione prende in imput una stringa contente il nome del cibo 
+e restituisce un oggetto di classe Food associato al nome della stringa.
+La funzione invia una richiesta alla API Nutritionix chiedendo informazioni relative al cibo, 
+se Nutritionix trova un cibo associata allora la funzione costruisce un oggetto di classe Food,
+altrimenti restiusce il valore False nel caso in cui non viene costruito nessun oggetto di classe Food.
+
+'''
 def get_food(food):
     #File jason da inviare in POST
     pload = {
