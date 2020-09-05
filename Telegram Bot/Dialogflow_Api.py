@@ -12,7 +12,7 @@ session_client = dialogflow.SessionsClient()
 
 """
 rispondimi(testo)-->string
-usa le api di dialogflow per rispondeer al testo
+usa le api di dialogflow per rispondere al testo.
 """
 def rispondimi(testo):
     session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
