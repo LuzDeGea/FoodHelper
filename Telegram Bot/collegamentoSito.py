@@ -9,7 +9,6 @@ def inserisci_utente(utente):
     richiesta="http://foodhelper.altervista.org/InserisciUtente.php?"+\
     "chat_id='"+str(utente.get_chat_id())+\
     "'&nome='"+utente.get_nome()+\
-    "'&cognome='"+utente.get_cognome()+\
     "'&sesso='"+utente.get_sesso()+\
     "'&data_nascita='"+str(utente.get_data())+\
     "'&altezza='"+str(utente.get_altezza())+\
@@ -29,7 +28,7 @@ def get_utente(chat_id):
     if r.json() is None:
         return None
     utente = Utente(chat_id)
-    utente.set_utente(r.json()["nome"],r.json()["cognome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],int(r.json()["b_iper"]),int(r.json()["nefropatia"]),int(r.json()["anemia_sideropenica"]))
+    utente.set_utente(r.json()["nome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],int(r.json()["b_iper"]),int(r.json()["nefropatia"]),int(r.json()["anemia_sideropenica"]))
     return utente
 
 """

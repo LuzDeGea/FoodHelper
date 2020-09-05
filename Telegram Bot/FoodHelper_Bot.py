@@ -19,7 +19,7 @@ bot = telepot.Bot(TOKEN)
 Stato conversazione serve a conservare a che punto della registrazione utente 
 ci si è fermati per avere un punto di ripresa al ritorno sul bot.
 """
-stato_conversazione = {"Nome" : 0,"Cognome" : 1,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6,"Diabete" : 7, "Colesterolo" : 8,"Iper_tens" : 9, "Ipo_tens" : 10,"Nefropatia" : 11,"Anemia_sideropenica" : 12}
+stato_conversazione = {"Nome" : 0,"Sesso" : 2,"Eta" : 3,"Altezza" : 4,"Peso" : 5, "Attività" : 6,"Diabete" : 7, "Colesterolo" : 8,"Iper_tens" : 9, "Ipo_tens" : 10,"Nefropatia" : 11,"Anemia_sideropenica" : 12}
 utenti = {}
 acquisizione_dati = {}
 
@@ -104,15 +104,6 @@ def new_user(msg, chat_id):
             bot.sendMessage(chat_id, "Per favore inserisci correttamente il nome.")
         else:
             utenti[chat_id].set_nome(nome)
-            bot.sendMessage(chat_id, "Qual è il tuo cognome?")
-            acquisizione_dati[chat_id] = stato_conversazione["Cognome"]
-
-    elif acquisizione_dati[chat_id] == stato_conversazione["Cognome"]:
-        cognome = controllo_nome(msg["text"])
-        if cognome == False:
-            bot.sendMessage(chat_id, "Per favore inserisci correttamente il cognome.")
-        else:
-            utenti[chat_id].set_cognome(cognome)
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Maschio", callback_data="sesso_maschio"),
                  InlineKeyboardButton(text="Femmina", callback_data="sesso_femmina")]
@@ -237,7 +228,7 @@ Mostra le informazioni dell'utente leggendole dal DataBase, se l'utente
 non è registrato, restituisce un messaggio di richiesta di registrazione.
 """
 def show_user(chat_id):
-    info = get_utente(chat_id)==None
+    info = get_utente(chat_id)
     if info:
         bot.sendMessage(chat_id, "Your personal info:\n\n" + str(info))
     else:

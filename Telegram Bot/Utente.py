@@ -28,9 +28,8 @@ class Utente:
     set_utente(stringa, stringa, stringa, data, intero, intero, stringa, bool, bool, bool) --> void 
     Funzione che completa la l'inserimento dell'utente inserendo i relativi dati.
     '''
-    def set_utente(self, nome, cognome, sesso, data, altezza, peso, attivita, b_iper, nefropatia, anemia_sideropenica):
+    def set_utente(self, nome, sesso, data, altezza, peso, attivita, b_iper, nefropatia, anemia_sideropenica):
         self.nome=nome
-        self.cognome=cognome
         self.sesso=sesso
         self.set_data(data)
         self.altezza=int(altezza)
@@ -54,12 +53,6 @@ class Utente:
     '''
     def set_nome(self, nome):
         self.nome = nome
-
-    '''
-    set_cognome(stringa) --> void
-    '''
-    def set_cognome(self, cognome):
-        self.cognome = cognome
 
     '''
     set_sesso(stringa) --> void
@@ -148,12 +141,6 @@ class Utente:
     '''
     def get_nome(self):
         return self.nome
-
-    '''
-    get_cognome() --> stringa
-    '''
-    def get_cognome(self):
-        return self.cognome
 
     '''
     get_sesso() --> stringa
@@ -250,7 +237,7 @@ class Utente:
     toString() --> stringa
     '''
     def __str__(self):
-        return "Nome: " + str(self.nome) + "\nCognome: " + str(self.cognome) + "\nSesso: " + str(self.sesso) + \
+        return "Nome: " + str(self.nome) + "\nSesso: " + str(self.sesso) + \
                 "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "cm\nPeso: " + str(self.peso) +\
                 "kg\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " + str(self.fabbisogno_calorico())
 
