@@ -57,10 +57,10 @@ def modifica_nome(utente, result):
     try:
         nome = result.parameters.fields["given-name"].string_value
     except KeyError:
-        return "Inserisci correttamente il peso, ad esempio '70kg'."
+        return "Inserisci correttamente il tuo primo nome."
 
     if nome == "":
-        return "Inserisci correttamente il tuo primo nome"
+        return "Inserisci correttamente il tuo primo nome."
 
     utente.set_nome(nome)
     inserisci_utente(utente)
@@ -123,7 +123,7 @@ def modifica_data(utente, result):
     try:
         data = result.parameters.fields["date"].string_value
     except KeyError:
-        return "Inserire correttamente la data."
+        return "Inserire correttamente la data, ad esempio: '01/01/90'"
 
     if data == "":
         return "Inserire correttamente la data, ad esempio: '01/01/90'"
@@ -137,7 +137,7 @@ def modifica_attività(utente, result):
     try:
         attivita = result.parameters.fields["attivita"].string_value
     except KeyError:
-        return "Inserire correttamente la data."
+        return "Inserisci correttamente l'attività."
 
     if attivita == "":
         return "Inserisci correttamente l'attività tra queste: 'Sedentaria', 'Leggera', 'Moderata', 'Attiva' " \
