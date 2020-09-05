@@ -160,7 +160,7 @@ class Food:
     toString() --> stringa
     '''
     def __str__(self):
-        food = "Il cibo riconosciuto è: " + str(self.nome) + "\n"
+        food = str(self.nome) + "\n"
         if self.calorie is not None:
             food += "Calorie: " + str(self.calorie) + " kcal\n"
         if self.carboidrati is not None:
@@ -178,9 +178,9 @@ class Food:
         if self.sodio is not None:
             food += "Sodio: " + str(self.sodio) + " mg\n"
         if self.zuccheri is not None:
-            food += "Zuccheri: " + str(self.zuccheri) + "g\n"
-        if self.item_name is not None:
-            food += "Item_name:" + str(self.item_name) + ""  ##test##
+            food += "Zuccheri: " + str(self.zuccheri) + "g"
+        #if self.item_name is not None:
+            #food += "Item_name:" + str(self.item_name) + ""  ##test##
         return food
 
 

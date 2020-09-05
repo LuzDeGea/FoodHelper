@@ -21,7 +21,6 @@ with open(filter_name, 'r') as csv_filter:
     csv_filter = csv.reader(csv_filter)
     for row in csv_filter:
         filtro.append(row[0])
-#print (filtro)
 
 """
 food_detection()-->string
