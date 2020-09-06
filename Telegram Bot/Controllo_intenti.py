@@ -170,4 +170,5 @@ def rilevazione_cibo(utente, result):
     if utente:
             return str(food) + "\n\n" + utente.can_eat(food)
     else:
-        return str(food)
+        return "Non ti sei ancora registrato, non posso darti consigli alimentari.\nPer registrarti utilizza il" \
+               " comando /new.\nInformazioni su: " + str(food)

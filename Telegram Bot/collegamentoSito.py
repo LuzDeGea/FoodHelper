@@ -2,22 +2,26 @@ import requests
 from Utente import Utente
 
 """
-inserisci_utente(oggetto_utente)
+inserisci_utente(oggetto_utente) --> boolean
 inserisce un utente nel database sovrascrivendo se già presente
 """
 def inserisci_utente(utente):
-    richiesta="http://foodhelper.altervista.org/InserisciUtente.php?"+\
-    "chat_id='"+str(utente.get_chat_id())+\
-    "'&nome='"+utente.get_nome()+\
-    "'&sesso='"+utente.get_sesso()+\
-    "'&data_nascita='"+str(utente.get_data())+\
-    "'&altezza='"+str(utente.get_altezza())+\
-    "'&peso='"+str(utente.get_peso())+\
-    "'&attivita='"+str(utente.get_attivita())+\
-    "'&b_iper='"+str(int(utente.get_iper_tens()))+ \
-    "'&nefropatia='" + str(int(utente.get_nefropatia())) + \
-    "'&anemia_sideropenica='"+str(int(utente.get_anemia_sideropenica()))+"'"
-    requests.get(richiesta)
+    try:
+        richiesta="http://foodhelper.altervista.org/InserisciUtente.php?"+\
+        "chat_id='"+str(utente.get_chat_id())+\
+        "'&nome='"+utente.get_nome()+\
+        "'&sesso='"+utente.get_sesso()+\
+        "'&data_nascita='"+str(utente.get_data())+\
+        "'&altezza='"+str(utente.get_altezza())+\
+        "'&peso='"+str(utente.get_peso())+\
+        "'&attivita='"+str(utente.get_attivita())+\
+        "'&b_iper='"+str(int(utente.get_iper_tens()))+ \
+        "'&nefropatia='" + str(int(utente.get_nefropatia())) + \
+        "'&anemia_sideropenica='"+str(int(utente.get_anemia_sideropenica()))+"'"
+        requests.get(richiesta)
+    except AttributeError:
+        return False
+    return True
 
 """
 get_utente(chat_id)-->Utente
@@ -28,7 +32,7 @@ def get_utente(chat_id):
     if r.json() is None:
         return None
     utente = Utente(chat_id)
-    utente.set_utente(r.json()["nome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],r.json()["peso"],r.json()["attivita"],int(r.json()["b_iper"]),int(r.json()["nefropatia"]),int(r.json()["anemia_sideropenica"]))
+    utente.set_utente(r.json()["nome"],r.json()["sesso"],r.json()["data_nascita"],r.json()["altezza"],float(r.json()["peso"]),r.json()["attivita"],int(r.json()["b_iper"]),int(r.json()["nefropatia"]),int(r.json()["anemia_sideropenica"]))
     return utente
 
 """
