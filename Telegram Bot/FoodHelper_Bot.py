@@ -45,7 +45,8 @@ def on_chat_message(msg):
         if not food:
             bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
         else:
-            bot.sendMessage(chat_id, "Il cibo riconosciuto è: " + str(food))
+            bot.sendMessage(chat_id, "Non sei ancora registrato, per registrarti utilizza il comando /new.\n"
+                                     "Il cibo riconosciuto è: " + str(food))
             if esiste_utente(chat_id):
                 bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
 
@@ -252,7 +253,7 @@ def on_callback_query(msg):
                                  "\nantoniofrancescofiore98@gmail.com"
                                  "\nvinci19997@gmail.com"
                                  "\nantoniogrisulli23@gamil.com")
-        
+
     elif query_data == "version":
         bot.answerCallbackQuery(query_id, "Version Beta 1.0")
 

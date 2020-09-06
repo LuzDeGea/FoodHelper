@@ -60,7 +60,7 @@ risultano non di cibo (appartenenti a filtro) e quelle generiche
 def filtering(response):
     if ConteinsLabel(response,"Food") or ConteinsLabel(response,"Plant"):
         for food in response.label_annotations:
-            if not((food.description in filtro) and (contiene(food.description))):
+            if not(food.description in filtro) and not (contiene(food.description)):
                 return food.description
         return False
     else:
@@ -73,5 +73,5 @@ definisce se è presente una etichetta come sotto-stringa nel nome del cibo
 def contiene(Etichetta):
     for food in no_food:
         if re.search(food.lower(),Etichetta.lower()):
-            return False
-    return True
+            return True
+    return False
