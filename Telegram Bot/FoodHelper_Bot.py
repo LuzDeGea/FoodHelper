@@ -112,7 +112,7 @@ def new_user(msg, chat_id):
             acquisizione_dati[chat_id] = stato_conversazione["Sesso"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Sesso"]:
-        bot.sendMessage(chat_id, "Qual è la tua data di nascita?")
+        bot.sendMessage(chat_id, "Qual è la tua data di nascita? Utilizza il formato gg/mm/aaaa.")
         acquisizione_dati[chat_id] = stato_conversazione["Eta"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Eta"]:
@@ -121,7 +121,7 @@ def new_user(msg, chat_id):
             bot.sendMessage(chat_id, "Inserisci la data correttamente nel formato gg/mm/aaaa.")
         else:
             utenti[chat_id].set_data(data)
-            bot.sendMessage(chat_id, "Quanto sei alto?")
+            bot.sendMessage(chat_id, "Quanto sei alto? Inserisci l'altezza in cm.")
             acquisizione_dati[chat_id] = stato_conversazione["Altezza"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Altezza"]:
@@ -130,7 +130,7 @@ def new_user(msg, chat_id):
             bot.sendMessage(chat_id, "Per favore inserisci correttamente l'altezza in cm.")
         else:
             utenti[chat_id].set_altezza(altezza)
-            bot.sendMessage(chat_id, "Quanto pesi?")
+            bot.sendMessage(chat_id, "Quanto pesi? Inserisci il peso in kg.")
             acquisizione_dati[chat_id] = stato_conversazione["Peso"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Peso"]:
@@ -218,9 +218,11 @@ def new_user(msg, chat_id):
             acquisizione_dati[chat_id] = stato_conversazione["Anemia_sideropenica"]
 
     elif acquisizione_dati[chat_id] == stato_conversazione["Anemia_sideropenica"]:
-            bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
             acquisizione_dati.pop(chat_id)
-            inserisci_utente(utenti.pop(chat_id))
+            if inserisci_utente(utenti.pop(chat_id)):
+                bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
+            else:
+                bot.sendMessage(chat_id,"La tua registrazione non è andata a buon fine, prova a registrarti nuovamente.")
 
 """
 show_user(chat_id)-->Text
@@ -241,14 +243,16 @@ def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor="callback_query")
     if query_data == "info":
         bot.answerCallbackQuery(query_id, "Version Beta 1.0")
-        bot.sendMessage(from_id, "Questo bot si occupa di trovare alcune informazioni meteo su una determinata città.\n"
-                                 "Basterà digitare il nome della città per avere i risultati relativa ad essa.")
+        bot.sendMessage(from_id, "Questo bot si occupa di aiutarti con la tua alimentazione, fornendoti i.\n"
+                                 "valori nutrizionali dei piatti che ti interessano, se non sei ancora\n"
+                                 "registrato, utilizza /new.")
     elif query_data == "developer":
         bot.answerCallbackQuery(query_id)
         bot.sendMessage(from_id, "Per aiutarci a migliorare o per maggiori informazioni contattare: "
-                                 "antoniofrancescofiore98@gmail.com"
-                                 "vinci19997@gmail.com"
-                                 "antoniogrisulli23@gamil.com")
+                                 "\nantoniofrancescofiore98@gmail.com"
+                                 "\nvinci19997@gmail.com"
+                                 "\nantoniogrisulli23@gamil.com")
+        
     elif query_data == "version":
         bot.answerCallbackQuery(query_id, "Version Beta 1.0")
 

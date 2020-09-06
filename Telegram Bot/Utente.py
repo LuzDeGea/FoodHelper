@@ -239,7 +239,8 @@ class Utente:
     def __str__(self):
         return "Nome: " + str(self.nome) + "\nSesso: " + str(self.sesso) + \
                 "\nEtà: " + str(self.get_eta()) + "\nAltezza: " + str(self.altezza) + "cm\nPeso: " + str(self.peso) +\
-                "kg\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " + str(self.fabbisogno_calorico())
+                "kg\nAttività fisica: " + str(self.attivita) + "\nFabbisogno calorico: " +\
+                str(round(self.fabbisogno_calorico(), 2))
 
     '''
     can_eat(Food) --> stringa
@@ -298,7 +299,7 @@ def controllo_nome(nome):
 def controllo_formato_data(data):
     try:
         n_data = datetime.strptime(data, "%d/%m/%Y")
-        if (date.today().year - n_data.year) > 17:
+        if (date.today().year - n_data.year) > 13:
             return data
         return False
     except ValueError:
@@ -309,12 +310,12 @@ def controllo_formato_data(data):
     Effettua un controllo sul numero.
     '''
 def controllo_cifre(numero):
-    regex = re.findall("\d", numero)
+    regex = re.findall("[\d]*\.[\d]*|\d+", numero)
     char = ""
     if regex:
         for c in regex:
             char += c
-        return int(char)
+        return float(char)
     return False
 
     '''
