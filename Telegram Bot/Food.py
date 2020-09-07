@@ -104,9 +104,9 @@ class Food:
 
     def can_eat_iperteso(self):
         if not (self.sodio is None):
-            if self.sodio < IPERTESO / 4:
+            if self.sodio < IPERTESO / 10:
                 return "Consigliato"
-            elif self.sodio < IPERTESO / 3:
+            elif self.sodio < IPERTESO / 6:
                 return "Sconsigliato"
             else:
                 return "Proibito"
