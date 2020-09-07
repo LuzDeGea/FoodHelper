@@ -1,6 +1,6 @@
 import io, os
 from google.cloud import vision
-from Nutrition import get_food
+from Nutrition import get_food, traduzione
 import csv
 import re
 
@@ -36,7 +36,11 @@ def food_detection():
 
     cibo_p = filtering(response)
     if cibo_p:
-        return get_food(cibo_p)
+        food = get_food(cibo_p)
+        if food:
+            return food
+        else:
+            return get_food(traduzione(cibo_p))
     else:
         return False
 

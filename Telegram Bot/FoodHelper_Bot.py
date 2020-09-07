@@ -43,12 +43,15 @@ def on_chat_message(msg):
             bot.download_file(msg['document']['file_id'], 'Immagini\\Cibo.png')
         food = food_detection()
         if not food:
-            bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente")
+            bot.sendMessage(chat_id, "Il cibo non è stato riconosciuto correttamente.")
+
         else:
-            bot.sendMessage(chat_id, "Non sei ancora registrato, per registrarti utilizza il comando /new.\n"
-                                     "Il cibo riconosciuto è: " + str(food))
             if esiste_utente(chat_id):
-                bot.sendMessage(chat_id, get_utente(chat_id).can_eat(food))
+                bot.sendMessage(chat_id, "Il cibo riconosciuto è: " + str(food) +
+                                "\n\n" + get_utente(chat_id).can_eat(food))
+            else:
+                bot.sendMessage(chat_id, "Non sei ancora registrato, per registrarti utilizza il comando /new.\n"
+                                         "Il cibo riconosciuto è: " + str(food))
 
     elif content_type == "text":
         if msg["text"][0] != '/':
@@ -235,7 +238,7 @@ def show_user(chat_id):
     if info:
         bot.sendMessage(chat_id, "Your personal info:\n\n" + str(info))
     else:
-        bot.sendMessage(chat_id, "Non sei ancora registrato, usa /new per registrarti \n")
+        bot.sendMessage(chat_id, "Non sei ancora registrato, usa il comando /new per registrarti. \n")
 
 """
 Gestisce l'evento alla pressione dei pulsanti o all'uso dei comandi.

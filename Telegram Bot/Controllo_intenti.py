@@ -157,7 +157,10 @@ def rilevazione_cibo(utente, result):
         cibo = list(result.parameters.fields["Cibo"].struct_value.fields.values())[0].string_value
         #print(list((result.parameters.fields["Cibo"].struct_value.fields.keys()))[0])  #STAMPA LA CATEGORIA
     except IndexError:
-        cibo = result.parameters.fields["Cibo"].string_value
+        try:
+            cibo = result.parameters.fields["Cibo"].list_value.values[0].string_value
+        except IndexError:
+            cibo = result.parameters.fields["Cibo"].string_value
 
     if cibo == "":
         return "Spiacente, non abbiamo informazione relative a questo cibo."
