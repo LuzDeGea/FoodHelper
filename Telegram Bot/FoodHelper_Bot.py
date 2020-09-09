@@ -164,16 +164,32 @@ def new_user(msg, chat_id):
                 [InlineKeyboardButton(text="Si", callback_data="iper_tens_si"),
                 InlineKeyboardButton(text="No", callback_data="iper_tens_no")]
             ])
-            bot.sendMessage(chat_id, "Hai l'iper-tensione?", reply_markup=keyboard)
+            bot.sendMessage(chat_id, "Soffri di l'ipertensione?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Iper_tens"]
-            '''
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Iper_tens"]:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Si", callback_data="diabete_si"),
-                 InlineKeyboardButton(text="No", callback_data="diabete_no")]
+                [InlineKeyboardButton(text="Si", callback_data="Nefropatia_si"),
+                InlineKeyboardButton(text="No", callback_data="Nefropatia_no")]
             ])
-            bot.sendMessage(chat_id, "Sei diabetico?", reply_markup=keyboard)
-            acquisizione_dati[chat_id] = stato_conversazione["Diabete"]
-            '''
+            bot.sendMessage(chat_id, "Hai la nefropatia?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Nefropatia"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Nefropatia"]:
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="Si", callback_data="Anemia_sideropenica_si"),
+                 InlineKeyboardButton(text="No", callback_data="Anemia_sideropenica_no")]
+            ])
+            bot.sendMessage(chat_id, "Sei anemico?", reply_markup=keyboard)
+            acquisizione_dati[chat_id] = stato_conversazione["Anemia_sideropenica"]
+
+    elif acquisizione_dati[chat_id] == stato_conversazione["Anemia_sideropenica"]:
+            acquisizione_dati.pop(chat_id)
+            if inserisci_utente(utenti.pop(chat_id)):
+                bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
+            else:
+                bot.sendMessage(chat_id,"La tua registrazione non è andata a buon fine, prova a registrarti nuovamente.")
+
     elif acquisizione_dati[chat_id] == stato_conversazione["Diabete"]:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Si", callback_data="colesterolo_si"),
@@ -187,24 +203,9 @@ def new_user(msg, chat_id):
                 [InlineKeyboardButton(text="Si", callback_data="iper_tens_si"),
                  InlineKeyboardButton(text="No", callback_data="iper_tens_no")]
             ])
-            bot.sendMessage(chat_id, "Hai l'iper-tensione?", reply_markup=keyboard)
+            bot.sendMessage(chat_id, "Soffri di l'ipertensione?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Iper_tens"]
 
-    elif acquisizione_dati[chat_id] == stato_conversazione["Iper_tens"]:
-            keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Si", callback_data="Nefropatia_si"),
-                InlineKeyboardButton(text="No", callback_data="Nefropatia_no")]
-            ])
-            bot.sendMessage(chat_id, "Hai la Nefropatia?", reply_markup=keyboard)
-            acquisizione_dati[chat_id] = stato_conversazione["Nefropatia"]
-            '''
-            keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Si", callback_data="ipo_tens_si"),
-                 InlineKeyboardButton(text="No", callback_data="ipo_tens_no")]
-            ])
-            bot.sendMessage(chat_id, "Hai l'ipo-tensione?", reply_markup=keyboard)
-            acquisizione_dati[chat_id] = stato_conversazione["Ipo_tens"]
-            '''
     elif acquisizione_dati[chat_id] == stato_conversazione["Ipo_tens"]:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text="Si", callback_data="Nefropatia_si"),
@@ -212,21 +213,6 @@ def new_user(msg, chat_id):
             ])
             bot.sendMessage(chat_id, "Hai la Nefropatia?", reply_markup=keyboard)
             acquisizione_dati[chat_id] = stato_conversazione["Nefropatia"]
-
-    elif acquisizione_dati[chat_id] == stato_conversazione["Nefropatia"]:
-            keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Si", callback_data="Anemia_sideropenica_si"),
-                 InlineKeyboardButton(text="No", callback_data="Anemia_sideropenica_no")]
-            ])
-            bot.sendMessage(chat_id, "Hai l'Anemia_sideropenica?", reply_markup=keyboard)
-            acquisizione_dati[chat_id] = stato_conversazione["Anemia_sideropenica"]
-
-    elif acquisizione_dati[chat_id] == stato_conversazione["Anemia_sideropenica"]:
-            acquisizione_dati.pop(chat_id)
-            if inserisci_utente(utenti.pop(chat_id)):
-                bot.sendMessage(chat_id, "Grazie per averci fornito dei tuoi dati!")
-            else:
-                bot.sendMessage(chat_id,"La tua registrazione non è andata a buon fine, prova a registrarti nuovamente.")
 
 """
 show_user(chat_id)-->Text
