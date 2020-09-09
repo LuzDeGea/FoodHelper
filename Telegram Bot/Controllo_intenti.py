@@ -3,6 +3,8 @@ from collegamentoSito import inserisci_utente
 from Nutrition import get_food, traduzione
 import re
 
+tipo_cibo = ["frutta", "carne", "verdure", "ortaggi", "primi_piatti", "legumi"]
+
 """
 controllo_intent(query_result, utente)--> text_respose
 prende il risultato della query e lo confronta con i possibili intenti, 
@@ -153,16 +155,9 @@ identifica se l'intento dell'utente è parlare di cibo, se è così restituisce 
 altrimenti restituisce stringhe di risposta negative sulla scorretta rilevazione del cibo.
 """
 def rilevazione_cibo(utente, result):
-    try:
-        cibo = list(result.parameters.fields["Cibo"].struct_value.fields.values())[0].string_value
-        #print(list((result.parameters.fields["Cibo"].struct_value.fields.keys()))[0])  #STAMPA LA CATEGORIA
-    except IndexError:
-        try:
-            cibo = result.parameters.fields["Cibo"].list_value.values[0].string_value
-        except IndexError:
-            cibo = result.parameters.fields["Cibo"].string_value
+    cibo = controllo_tipo_cibo(result)
 
-    if cibo == "":
+    if not cibo:
         return "Spiacente, non abbiamo informazione relative a questo cibo."
 
     food = get_food(cibo)
@@ -175,3 +170,24 @@ def rilevazione_cibo(utente, result):
     else:
         return "Non ti sei ancora registrato, non posso darti consigli alimentari.\nPer registrarti utilizza il" \
                " comando /new.\nInformazioni su: " + str(food)
+
+def controllo_tipo_cibo(result):
+    food = ""
+
+    try:
+        food = result.parameters.fields["Cibo"].list_value.values[0].string_value
+    except IndexError:
+        print("Problema riconoscimento tipo di cibo!")
+
+    if food != "":
+        return food
+
+    for cibo in tipo_cibo:
+        try:
+            food = result.parameters.fields["Cibo"].list_value.values[0].struct_value.fields[cibo].string_value
+        except IndexError:
+            continue
+        if food != "":
+            return food
+
+    return False

@@ -9,18 +9,18 @@ Tramite API google translate inviamo una richieste da traduzione
 e otterremo il risultato corrispondente. 
 '''
 def traduzione(msg):
-    url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
+    url = "https://just-translated.p.rapidapi.com"
 
-    payload = "source=it&q="+msg+"&target=en"
+    payload = {"text": msg,
+               "lang_from": "it",
+               "lang_to": "en"}
     headers = {
-        'x-rapidapi-host': "google-translate1.p.rapidapi.com",
-        'x-rapidapi-key': "0e02a9f55dmsh53204c2910d6aeap14f2c6jsn2cac795c2119",
-        'accept-encoding': "application/gzip",
-        'content-type': "application/x-www-form-urlencoded"
+        'x-rapidapi-host': "just-translated.p.rapidapi.com",
+        'x-rapidapi-key': "0e02a9f55dmsh53204c2910d6aeap14f2c6jsn2cac795c2119"
     }
 
-    response = requests.request("POST", url, data=payload, headers=headers)
-    return response.json()["data"]["translations"][0]["translatedText"]
+    response = requests.request("GET", url, headers=headers, params=payload)
+    return response.json()["text"][0]
 
 '''
 get_food(stringa) --> Food | get_food(stringa) --> bool
