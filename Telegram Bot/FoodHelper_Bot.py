@@ -9,9 +9,10 @@ import time
 from Nutrition import get_food, traduzione
 from collegamentoSito import inserisci_utente, get_utente, esiste_utente
 
-
-#Token di collegamento per il bot telegram
-TOKEN = "1130648366:AAEPXCisGv8B2Hby_3xuK9ATwMwGKqjPEn8"
+'''
+Token di collegamento per il bot telegram, al posto della stringa token inserire il codice fornito dal botfather.
+'''
+TOKEN = "TOKEN"
 #Collegamento al bot tramite token
 bot = telepot.Bot(TOKEN)
 
